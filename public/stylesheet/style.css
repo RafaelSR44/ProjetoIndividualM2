@@ -1,28 +1,1282 @@
+/* =========================== ESTILOS GLOBAIS =========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    background-color: #0F1B3C;
+    color: #CDBE91;
+    line-height: 1.6;
 }
+
 header {
-  background-color: #d35400;
-  color: white;
-  padding: 20px;
-  text-align: center;
+    background: linear-gradient(135deg, #463714, #0F1B3C);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 3px solid #C8A964;
 }
-footer {
-  background-color: #d35400;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+
+header h1 {
+    font-size: 3rem;
+    color: #CDBE91;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 0.5rem;
 }
+
+header p {
+    font-size: 1.2rem;
+    color: #a09b8c;
+}
+
+nav {
+    background-color: #1e2d50;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-btn {
+    background-color: #463714;
+    color: #CDBE91;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.nav-btn:hover {
+    background-color: #C8A964;
+    color: #0F1B3C;
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    background-color: #C8A964;
+    color: #0F1B3C;
+}
+
 main {
-  padding: 20px;
-  text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
-h1, h2 {
-  margin: 0;
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.content-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    color: #C8A964;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    border-bottom: 2px solid #463714;
+    padding-bottom: 1rem;
+}
+
+h3 {
+    color: #CDBE91;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    color: #C8A964;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background-color: #1e2d50;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #463714;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(200, 169, 100, 0.2);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: #CDBE91;
+}
+
+ul li::marker {
+    color: #C8A964;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+}
+
+/* =========================== RUNAS =========================== */
+
+/* Estrutura das runas colapsáveis */
+.runes-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.rune-system-overview {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Header das runas (sempre visível) */
+.rune-header {
+    display: flex;
+    align-items: center;
+    background-color: rgba(30, 45, 80, 0.8);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.rune-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para os ícones das runas */
+.rune-icon {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.rune-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Título no header */
+.rune-header h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Ícone de expandir */
+.expand-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+    color: #C8A964;
+}
+
+/* Conteúdo das runas (colapsado por padrão) */
+.rune-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+/* Estado expandido */
+.rune-tree.expanded .rune-content {
+    max-height: 2000px;
+    padding: 1.5rem;
+    background-color: rgba(30, 45, 80, 0.6);
+    border-radius: 0 0 15px 15px;
+    margin-top: -15px;
+}
+
+.rune-tree.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+.rune-tree.expanded .rune-header {
+    border-radius: 15px 15px 0 0;
+}
+
+/* Cores específicas por árvore */
+.rune-tree.precisao .rune-header {
+    border-color: #f1c40f;
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.9), rgba(241, 196, 15, 0.1));
+}
+
+.rune-tree.dominacao .rune-header {
+    border-color: #e74c3c;
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.9), rgba(231, 76, 60, 0.1));
+}
+
+.rune-tree.feiticaria .rune-header {
+    border-color: #3498db;
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.9), rgba(52, 152, 219, 0.1));
+}
+
+.rune-tree.determinacao .rune-header {
+    border-color: #2ecc71;
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.9), rgba(46, 204, 113, 0.1));
+}
+
+.rune-tree.inspiracao .rune-header {
+    border-color: #5bc0de;
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.9), rgba(91, 192, 222, 0.1));
+}
+
+/* Conteúdo expandido com cores */
+.rune-tree.precisao.expanded .rune-content {
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.6), rgba(241, 196, 15, 0.05));
+    border: 2px solid #f1c40f;
+    border-top: none;
+}
+
+.rune-tree.dominacao.expanded .rune-content {
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.6), rgba(231, 76, 60, 0.05));
+    border: 2px solid #e74c3c;
+    border-top: none;
+}
+
+.rune-tree.feiticaria.expanded .rune-content {
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.6), rgba(52, 152, 219, 0.05));
+    border: 2px solid #3498db;
+    border-top: none;
+}
+
+.rune-tree.determinacao.expanded .rune-content {
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.6), rgba(46, 204, 113, 0.05));
+    border: 2px solid #2ecc71;
+    border-top: none;
+}
+
+.rune-tree.inspiracao.expanded .rune-content {
+    background: linear-gradient(145deg, rgba(30, 45, 80, 0.6), rgba(91, 192, 222, 0.05));
+    border: 2px solid #5bc0de;
+    border-top: none;
+}
+
+/* Grid das runas chave */
+.rune-category {
+    margin-bottom: 2rem;
+}
+
+.rune-category h4 {
+    color: #C8A964;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #463714;
+    padding-bottom: 0.5rem;
+}
+
+.rune-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.rune-item {
+    background-color: rgba(70, 55, 20, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #C8A964;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.rune-item:hover {
+    background-color: rgba(70, 55, 20, 0.5);
+    transform: translateY(-2px);
+}
+
+.rune-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(200, 169, 100, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.rune-item:hover::before {
+    left: 100%;
+}
+
+.rune-item strong {
+    display: block;
+    color: #C8A964;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.rune-item p {
+    color: #a09b8c;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    flex: 1;
+}
+
+.rune-use {
+    color: #CDBE91;
+    font-style: italic;
+    font-size: 0.85rem;
+    display: block;
+    margin-top: auto;
+}
+
+/* Runas menores */
+.rune-grid-minor {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.rune-row {
+    background-color: rgba(205, 190, 145, 0.05);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(70, 55, 20, 0.2);
+    margin-bottom: 1rem;
+}
+
+.rune-minor-group h5 {
+    color: #C8A964;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.rune-minor-item {
+    background-color: rgba(30, 45, 80, 0.3);
+    padding: 0.8rem;
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+    margin-bottom: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.rune-minor-item:hover {
+    background-color: rgba(30, 45, 80, 0.5);
+    transform: translateX(5px);
+}
+
+.rune-minor-item strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.rune-minor-item p {
+    color: #a09b8c;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Cores específicas das bordas por árvore */
+.rune-tree.precisao .rune-minor-item {
+    border-left-color: #f1c40f;
+}
+
+.rune-tree.dominacao .rune-minor-item {
+    border-left-color: #e74c3c;
+}
+
+.rune-tree.feiticaria .rune-minor-item {
+    border-left-color: #3498db;
+}
+
+.rune-tree.determinacao .rune-minor-item {
+    border-left-color: #2ecc71;
+}
+
+.rune-tree.inspiracao .rune-minor-item {
+    border-left-color: #5bc0de;
+}
+
+/* Cores dos nomes das runas menores */
+.rune-tree.precisao .rune-minor-item strong {
+    color: #f1c40f;
+}
+
+.rune-tree.dominacao .rune-minor-item strong {
+    color: #e74c3c;
+}
+
+.rune-tree.feiticaria .rune-minor-item strong {
+    color: #3498db;
+}
+
+.rune-tree.determinacao .rune-minor-item strong {
+    color: #2ecc71;
+}
+
+.rune-tree.inspiracao .rune-minor-item strong {
+    color: #5bc0de;
+}
+
+.rune-tips {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.rune-tips .card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.rune-tips ul li {
+    text-align: left;
+    margin-bottom: 0.8rem;
+}
+
+.rune-tips ul li strong {
+    color: #C8A964;
+}
+
+/* Feitiços */
+/* Feitiços específicos - Nova versão aprimorada */
+.spells-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.spell-card {
+    background-color: #1e2d50;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px solid #463714;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.spell-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(200, 169, 100, 0.3);
+}
+
+/* Container para o ícone dos feitiços */
+.spell-icon-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+/* Estilo para as imagens dos feitiços */
+.spell-icon {
+    width: 85px;
+    height: 85px;
+    border-radius: 10px;
+    border: 3px solid #463714;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.spell-card:hover .spell-icon {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Efeito de brilho animado na borda */
+.spell-card.glowing::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 15px;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, transparent, transparent, transparent, var(--spell-color, #C8A964), transparent, transparent, transparent);
+    background-size: 400%;
+    animation: border-glow 2s linear infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes glow-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Efeito de pulso na cor do feitiço */
+.spell-card.pulsing .spell-icon {
+    box-shadow: 0 0 20px var(--glow-color);
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+.spell-card h3 {
+    color: #CDBE91;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.spell-card p {
+    color: #a09b8c;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.cooldown {
+    display: inline-block;
+    background-color: #463714;
+    color: #CDBE91;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Estado ativo do cooldown */
+.spell-card.active .cooldown {
+    background-color: #C8A964;
+    color: #0F1B3C;
+    animation: cooldown-flash 0.5s ease;
+}
+
+@keyframes cooldown-flash {
+    0% { transform: scale(1); background-color: #C8A964; }
+    50% { transform: scale(1.1); background-color: #ffffff; }
+    100% { transform: scale(1); background-color: #C8A964; }
+}
+
+/* Responsividade para feitiços */
+@media (max-width: 768px) {
+    .spells-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+    
+    .spell-card {
+        padding: 1.5rem;
+    }
+    
+    .spell-icon {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Efeito de ondulação quando clicado */
+.spell-card .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-effect 0.6s ease-out;
+}
+
+@keyframes ripple-effect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Tipos de dano */
+.damage-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.damage-card {
+    background-color: #1e2d50;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 3px solid;
+}
+
+.damage-card.physical {
+    border-color: #ff6b35;
+}
+
+.damage-card.magical {
+    border-color: #5b9bd5;
+}
+
+.damage-card.true {
+    border-color: #ffffff;
+}
+
+.damage-card h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* Campeões */
+/* Campeões - Sistema de Classes com Expansão */
+.champions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.champion-class {
+    background-color: #1e2d50;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #463714;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.champion-class.clickable {
+    cursor: pointer;
+}
+
+.champion-class.clickable:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(200, 169, 100, 0.3);
+}
+
+/* Header das classes com ícone */
+.champion-class-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+/* Estilo para os ícones das classes */
+.class-icon {
+    width: 85px;
+    height: 85px;
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    border: 2px solid rgba(200, 169, 100, 0.3);
+}
+
+.class-icon:hover {
+    transform: scale(1.05);
+}
+
+.champion-class h3 {
+    color: #CDBE91;
+    margin: 0;
+    font-size: 1.4rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.champion-class p {
+    color: #a09b8c;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.champion-example {
+    margin-bottom: 1rem;
+    font-style: italic;
+    color: #C8A964;
+    font-size: 0.9rem;
+}
+
+.class-strengths, .class-weaknesses {
+    background-color: rgba(200, 169, 100, 0.1);
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.class-strengths {
+    border-left: 3px solid #28a745;
+}
+
+.class-strengths strong {
+    color: #28a745;
+}
+
+.class-weaknesses {
+    border-left: 3px solid #dc3545;
+}
+
+.class-weaknesses strong {
+    color: #dc3545;
+}
+
+/* Cores específicas por classe */
+.champion-class[data-class="tank"] {
+    border-color: #4169E1;
+}
+
+.champion-class[data-class="tank"]:hover {
+    border-color: #6495ED;
+    box-shadow: 0 0 15px rgba(65, 105, 225, 0.4);
+}
+
+.champion-class[data-class="tank"] .class-icon {
+    border-color: #4169E1;
+}
+
+.champion-class[data-class="fighter"] {
+    border-color: #FF4500;
+}
+
+.champion-class[data-class="fighter"]:hover {
+    border-color: #FF6347;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.4);
+}
+
+.champion-class[data-class="fighter"] .class-icon {
+    border-color: #FF4500;
+}
+
+.champion-class[data-class="slayer"] {
+    border-color: #DC143C;
+}
+
+.champion-class[data-class="slayer"]:hover {
+    border-color: #FF1744;
+    box-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
+}
+
+.champion-class[data-class="slayer"] .class-icon {
+    border-color: #DC143C;
+}
+
+.champion-class[data-class="marksman"] {
+    border-color: #FFD700;
+}
+
+.champion-class[data-class="marksman"]:hover {
+    border-color: #FFF700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.champion-class[data-class="marksman"] .class-icon {
+    border-color: #FFD700;
+}
+
+.champion-class[data-class="mage"] {
+    border-color: #4169E1;
+}
+
+.champion-class[data-class="mage"]:hover {
+    border-color: #4682B4;
+    box-shadow: 0 0 15px rgba(65, 105, 225, 0.4);
+}
+
+.champion-class[data-class="mage"] .class-icon {
+    border-color: #4169E1;
+}
+
+.champion-class[data-class="controller"] {
+    border-color: #32CD32;
+}
+
+.champion-class[data-class="controller"]:hover {
+    border-color: #00FF00;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.4);
+}
+
+.champion-class[data-class="controller"] .class-icon {
+    border-color: #32CD32;
+}
+
+/* Conteúdo expandido */
+.expanded-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.champion-class.expanded .expanded-content {
+    max-height: 1000px;
+    opacity: 1;
+    padding-top: 2rem;
+    margin-top: 1rem;
+    border-top: 2px solid rgba(200, 169, 100, 0.3);
+}
+
+/* Subclasses */
+.subclasses-section {
+    margin-bottom: 2rem;
+}
+
+.subclasses-section h4 {
+    color: #C8A964;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.subclass {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(70, 55, 20, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #C8A964;
+}
+
+.subclass h5 {
+    color: #C8A964;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.subclass p {
+    color: #a09b8c;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Lista de campeões */
+.champions-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.champion-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.champion-item:hover {
+    background-color: rgba(200, 169, 100, 0.1);
+    transform: translateY(-2px);
+}
+
+.champion-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #463714;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.champion-item:hover .champion-img {
+    transform: scale(1.1);
+    border-color: #C8A964;
+}
+
+.champion-item span {
+    font-size: 0.85rem;
+    color: #CDBE91;
+}
+
+/* Seção de itens */
+.items-section h4 {
+    color: #C8A964;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.item-category {
+    margin-bottom: 1.5rem;
+}
+
+.item-category h6 {
+    color: #C8A964;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: rgba(30, 45, 80, 0.3);
+}
+
+.item:hover {
+    background-color: rgba(200, 169, 100, 0.1);
+    transform: translateY(-2px);
+}
+
+.item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #463714;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.item:hover img {
+    transform: scale(1.1);
+    border-color: #C8A964;
+}
+
+.item span {
+    font-size: 0.75rem;
+    color: #CDBE91;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Seção do diagrama de classes */
+.class-diagram-section {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.class-diagram-section .card {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.class-diagram-section ul li {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .champion-class-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .class-icon {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .champions-list {
+        justify-content: center;
+    }
+    
+    .items-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .item img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .item span {
+        font-size: 0.7rem;
+    }
+}
+
+/* Lanes */
+.lanes-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.map-representation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1.5rem;
+    max-width: 800px;
+    width: 100%;
+    height: 400px;
+}
+
+.lane {
+    background-color: #1e2d50;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid #463714;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.lane::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #C8A964;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.lane:hover::before {
+    transform: scaleX(1);
+}
+
+.top-lane { 
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.jungle { 
+    grid-column: 2;
+    grid-row: 1 / 4;
+    min-height: 100%;
+    background: linear-gradient(145deg, #1e2d50, #2d3d60);
+}
+
+.mid-lane { 
+    grid-column: 1;
+    grid-row: 2;
+    background: linear-gradient(145deg, #1e2d50, #463714);
+}
+
+.bot-lane { 
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.jungle::after {
+    content: '🌲';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    opacity: 0.3;
+}
+
+/* Minions */
+.minions-gold {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+footer {
+    background-color: #1e2d50;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 3px solid #C8A964;
+}
+
+/* =========================== RESPONSIVIDADE =========================== */
+
+@media (max-width: 1200px) {
+    .rune-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .rune-header {
+        padding: 1rem;
+    }
+    
+    .rune-header .rune-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .rune-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .expand-icon {
+        font-size: 1.2rem;
+    }
+    
+    .rune-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .rune-minor-item {
+        padding: 0.6rem;
+    }
+    
+    .rune-minor-item strong {
+        font-size: 0.9rem;
+    }
+    
+    .rune-minor-item p {
+        font-size: 0.8rem;
+    }
+    
+    .content-grid,
+    .spells-grid,
+    .damage-types,
+    .champions-grid,
+    .minions-gold {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-representation {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        height: auto;
+    }
+    
+    .top-lane { 
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .jungle { 
+        grid-column: 1;
+        grid-row: 2;
+        min-height: 120px;
+    }
+    
+    .mid-lane { 
+        grid-column: 1;
+        grid-row: 3;
+    }
+    
+    .bot-lane { 
+        grid-column: 1;
+        grid-row: 4;
+    }
+}
+
+/* =========================== ANIMAÇÕES =========================== */
+
+.card, .spell-card, .damage-card, .champion-class, .lane {
+    opacity: 0;
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-section {
+    position: relative;
+}
+
+.content-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #C8A964, #463714, #C8A964);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.content-section.active::before {
+    opacity: 1;
 }

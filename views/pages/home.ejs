@@ -1,25 +1,1371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ReservaAI</title>
+  <title>League of Legends - Guia Completo</title>
   <link rel="stylesheet" href="/stylesheet/style.css">
 </head>
+
 <body>
   <header>
-    <h1>ReservaAI</h1>
-    <h2>Reserve sua sala agora mesmo</h2>
+    <h1>League of Legends</h1>
+    <p>Guia Básico para Iniciantes</p>
   </header>
+
+  <nav>
+    <button class="nav-btn active" data-section="overview">Visão Geral</button>
+    <button class="nav-btn" data-section="runes">Runas</button>
+    <button class="nav-btn" data-section="spells">Feitiços</button>
+    <button class="nav-btn" data-section="damage">Tipos de Dano</button>
+    <button class="nav-btn" data-section="champions">Classes</button>
+    <button class="nav-btn" data-section="lanes">Lanes</button>
+    <button class="nav-btn" data-section="minions">Minions e Gold</button>
+  </nav>
+
   <main>
-    <p>
-      Bem-vindo ao ReservaAI! Nosso sistema permite que você reserve salas de forma rápida e prática, 
-      garantindo que você tenha o espaço ideal para suas reuniões, eventos ou estudos. 
-      Com apenas alguns cliques, encontre a sala perfeita e aproveite a conveniência de um processo de reserva eficiente.
-    </p>
+    <section id="overview" class="content-section active">
+      <h2>Visão Geral do Jogo</h2>
+      <div class="content-grid">
+        <div class="card">
+          <h3>O que é League of Legends?</h3>
+          <p>League of Legends (LoL) é um jogo MOBA (Multiplayer Online Battle Arena) onde duas equipes de 5 jogadores
+            competem para destruir o Nexus inimigo.</p>
+          <img src="assets/mapaLol.png" alt="Mapa do LoL">
+        </div>
+        <div class="card">
+          <h3>Objetivo Principal</h3>
+          <ul>
+            <li>Destruir torres inimigas</li>
+            <li>Matar minions para ouro e experiência</li>
+            <li>Trabalhar em equipe</li>
+            <li>Destruir o Nexus inimigo</li>
+            <img src="assets/objetivos.png" alt="Mapa do LoL">
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="runes" class="content-section">
+      <h2>Sistema de Runas</h2>
+      <p style="text-align: center; margin-bottom: 2rem; color: #a09b8c;">
+        Runas oferecem efeitos passivos adaptados às forças e papel do seu campeão. Você escolhe 1 árvore primária e 1
+        secundária, além de fragmentos estatísticos. Clique nas árvores de runas para ver detalhes.
+      </p>
+
+      <div class="rune-system-overview">
+        <div class="card">
+          <h3>Como Funciona?</h3>
+          <ul>
+            <li><strong>Árvore Primária:</strong> Escolha 1 runa chave (keystone) + 3 runas menores</li>
+            <li><strong>Árvore Secundária:</strong> Escolha 2 runas menores de outra árvore</li>
+            <li><strong>Fragmentos Estatísticos:</strong> 3 shards que afinam sua build</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="runes-container">
+        <div class="rune-tree precisao collapsed">
+          <div class="rune-header" data-rune="precisao">
+            <img src="assets/runes/precision.png" alt="Precisão" class="rune-icon">
+            <h3>Precisão (Precision)</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="rune-content">
+            <div class="rune-category">
+              <h4>Runas Chave (Escolha 1)</h4>
+              <div class="rune-grid">
+                <div class="rune-item">
+                  <strong>Pressione o Ataque</strong>
+                  <p>Atingir um campeão inimigo com 3 ataques básicos consecutivos causa dano adaptativo bônus e
+                    amplifica
+                    o dano que você causa até sair de combate.</p>
+                  <span class="rune-use">Use em: ADCs e lutadores que focam em duelos 1v1</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Ritmo Fatal</strong>
+                  <p>Atacar um campeão inimigo ganha uma stack de Tempo Letal por 6 segundos, até 6 stacks. Cada stack
+                    garante 5% de AS. Com stacks máximas, ataques também disparam uma nota que causa dano.</p>
+                  <span class="rune-use">Use em: Campeões baseados em velocidade de ataque</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Agilidade nos Pés</strong>
+                  <p>Atacar e se mover gera stacks de energia. Com 100 stacks, seu próximo ataque cura você e garante
+                    velocidade de movimento aumentada.</p>
+                  <span class="rune-use">Use em: ADCs sustentados que precisam de mobilidade</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Conquistador</strong>
+                  <p>Ganha stacks de força adaptativa ao atacar campeões inimigos. Após alcançar 12 stacks, cura uma
+                    parte
+                    do dano causado a campeões.</p>
+                  <span class="rune-use">Use em: Lutadores que ficam muito tempo em combate</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rune-category">
+              <h4>Runas Menores</h4>
+              <div class="rune-grid-minor">
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Primeira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Absorsão Vital</strong>
+                      <p>Takedowns curam você</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Triunfo</strong>
+                      <p>Takedowns restauram vida e concedem gold extra</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Presença de Espírito</strong>
+                      <p>Takedowns ou ao causar dano a um inimigo restauram mana/energia </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Segunda Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Lenda: Espontaneidade</strong>
+                      <p>Ganha velocidade de ataque permanente por takedowns</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Lenda: Aceleração</strong>
+                      <p>Ganha Aceleração de habilidade permanente para habilidades básicas por takedowns</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Lenda: Linhagem</strong>
+                      <p>Ganha roubo de vida por takedowns</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Terceira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Golpe de Misericórdia</strong>
+                      <p>Causa mais dano a campeões com pouca vida</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Dilacerar</strong>
+                      <p>Causa mais dano a campeões com mais vida máxima que você</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Até a morte</strong>
+                      <p>Causa mais dano quando está com pouca vida</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rune-tree dominacao collapsed">
+          <div class="rune-header" data-rune="dominacao">
+            <img src="assets/runes/domination.png" alt="Dominação" class="rune-icon">
+            <h3>Dominação (Domination)</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="rune-content">
+            <div class="rune-category">
+              <h4>Runas Chave (Escolha 1)</h4>
+              <div class="rune-grid">
+                <div class="rune-item">
+                  <strong>Eletrocutar</strong>
+                  <p>Causar dano a um inimigo com 3 ataques ou habilidades diferentes em 3s causa dano adaptativo
+                    adicional. Cooldown de 20s</p>
+                  <span class="rune-use">Use em: Assassinos e magos de burst</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Colheita Sombria</strong>
+                  <p>Causar dano a campeões abaixo de 50% da vida causa dano adaptativo adicional e colhe a alma de sua
+                    vítima. Cooldown de 35s, resetando para 1s em takedowns.</p>
+                  <span class="rune-use">Use em: Campeões de late game e poke</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Chuva de Laminas</strong>
+                  <p>Ganha velocidade de ataque massiva para os próximos 3 ataques contra campeões. Cooldown de 10s </p>
+                  <span class="rune-use">Use em: Assassinos dependentes de ataques básicos</span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="rune-category">
+              <h4>Runas Menores</h4>
+              <div class="rune-grid-minor">
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Primeira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Golpe Desleal</strong>
+                      <p>Causa dano verdadeiro adicioal a inimigos com movimento prejudicado</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Gosto de Sangue</strong>
+                      <p>Causar dano a um campeão cura você</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Impacto Repentino</strong>
+                      <p>Dano verdadeiro extra após dash, blink ou saída de invisibilidade</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Segunda Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Sentinela Profunda</strong>
+                      <p>Torna as wards colocadas no território inimigo mais resistentes (ganhando +1 de vida)</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Sexto Sentido</strong>
+                      <p>Permite rastrear wards inimigas próximas que não estejam visíveis.</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Lembrança Aterrorizante</strong>
+                      <p>Garante Aceleração de Habilidade para Trinkets após abates de campeões, acumulando
+                        infinitamente.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Terceira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Caçador de Tesouros</strong>
+                      <p>Takedowns únicos garantem gold extra da primeira vez que são coletadas</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Caçador Incansável</strong>
+                      <p>Takedowns únicos garantem Velocidade de movimento permanente fora de combate</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Caçador Supremo</strong>
+                      <p>Takedowns únicos reduzem o CD da ultimate</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rune-tree feiticaria collapsed">
+          <div class="rune-header" data-rune="feiticaria">
+            <img src="assets/runes/sorcery.png" alt="Feitiçaria" class="rune-icon">
+            <h3>Feitiçaria (Sorcery)</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="rune-content">
+            <div class="rune-category">
+              <h4>Runas Chave (Escolha 1)</h4>
+              <div class="rune-grid">
+                <div class="rune-item">
+                  <strong>Cometa Arcano</strong>
+                  <p>Causar dano com habilidades invoca um cometa no alvo. Cooldown de 20-8s.</p>
+                  <span class="rune-use">Use em: Magos de poke como Xerath</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Invocar Aery</strong>
+                  <p>Seus ataques e habilidades enviam o Aery até um alvo, causanso dano a
+                    inimigos ou protegendo aliados.</p>
+                  <span class="rune-use">Use em: Supports encantadores como Karma e Lulu</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Ímpeto Gradual</strong>
+                  <p>Depois de causar dano com 3 habilidades separadas ou ataques, ganha Velocidade de movimento massiva
+                    e resistência a slows.
+                    Cooldown de 30-10s.</p>
+                  <span class="rune-use">Use em: Campeões que se baneficiam de mobilidade como Gragas</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rune-category">
+              <h4>Runas Menores</h4>
+              <div class="rune-grid-minor">
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Primeira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Arcanista do Axioma</strong>
+                      <p>Aumenta dano/cura/escudo da ultimate e reduz seu CD atual com takedowns</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Faixa de Fluxo de Mana</strong>
+                      <p>Acertar um campeão com uma habilidade ganha mana máxima permanente</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Manto de Nimbus</strong>
+                      <p>Usar summoners gera velocidade de movimento e efeito fantasma</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Segunda Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Transcendência</strong>
+                      <p>Ganha aceleração de habilidade nos níveis 5 e 8, mas no nível 11 ao abater campeões reduz em
+                        20% o CD das habilidades básicas</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Celeridade</strong>
+                      <p>Ganha velocidade de movimento baseado em bônus de velocidade de movimento</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Foco Absoluto</strong>
+                      <p>Ganha Dano Adaptativo quando acima de 70% da vida</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Terceira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Chamuscar</strong>
+                      <p>Primeira habilidade de dano que atingir o alvo, queima o alvo</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Caminhar Sobre Águas</strong>
+                      <p>Ganha velocidade de movimento e Dano Adaptativo no rio</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Tempestade Crescente</strong>
+                      <p>Ganha quantidades crescentes de Dano Adaptativo ao longo do jogo</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rune-tree determinacao collapsed">
+          <div class="rune-header" data-rune="determinacao">
+            <img src="assets/runes/resolve.png" alt="Determinação" class="rune-icon">
+            <h3>Determinação (Resolve)</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="rune-content">
+            <div class="rune-category">
+              <h4>Runas Chave (Escolha 1)</h4>
+              <div class="rune-grid">
+                <div class="rune-item">
+                  <strong>Aperto dos Mortos-vivos</strong>
+                  <p>A cada 4s, seu próximo ataque contra um Campeão causa dano Mágico adicioal, cura você e aumenta
+                    permanentemente sua vida.</p>
+                  <span class="rune-use">Use em: Tanks e bruisers como Sion e Ornn</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Pós-Choque</strong>
+                  <p>Após imobilizar um Campeão inimigo, ganha defesas e depois causa um ataque de Dano Mágico
+                    explosivo. Cooldown de 20s.</p>
+                  <span class="rune-use">Use em: Supports tanques como Leona e Thresh</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Guardião</strong>
+                  <p>Você e aliados próximos ganham escudo quando um de vocês sofre dano de campeão. Cooldown de 90-40s.
+                  </p>
+                  <span class="rune-use">Use em: Supports defensivos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rune-category">
+              <h4>Runas Menores</h4>
+              <div class="rune-grid-minor">
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Primeira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Demolir</strong>
+                      <p>Acumula dano para destruir estruturas mais rapidamente</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Fonte da Vida</strong>
+                      <p>Imobilizar inimigos cura você e o aliado próximo com menos vida</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Golpe de Escudo</strong>
+                      <p>Sempre que receber um escudo, seu próximo ataque básico contra um Campeão causará Dano
+                        Adaptativo</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Segunda Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Condicionamento</strong>
+                      <p>Após 12 minutos, ganha +8 de armadura e resistência mágica, e 3% a mais de resistências</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Ventos Revigorantes</strong>
+                      <p>Após tomar dano, ganha regeneração de vida por 10 segundos</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Osso Revestido</strong>
+                      <p>Após tomar dano, próximos 3 ataques ou habilidades causam menos dano</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Terceira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Crescimento Excessivo</strong>
+                      <p>Permanentemente ganha vida por unidades ou monstros abatidos perto de você</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Revitalizar</strong>
+                      <p>Curas e escudos são 5% mais fortes, +10% cura e escudo em alvos com pouca vida</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Inabalável</strong>
+                      <p>Ganha armadura e resistência mágica bônus quando sofre slow ou imobilização</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rune-tree inspiracao collapsed">
+          <div class="rune-header" data-rune="inspiracao">
+            <img src="assets/runes/inspiration.png" alt="Inspiração" class="rune-icon">
+            <h3>Inspiração (Inspiration)</h3>
+            <span class="expand-icon">▼</span>
+          </div>
+          <div class="rune-content">
+            <div class="rune-category">
+              <h4>Runas Chave (Escolha 1)</h4>
+              <div class="rune-grid">
+                <div class="rune-item">
+                  <strong>Aprimoramento Glacial</strong>
+                  <p>Imobilizar campeão inimigo causa 3 raios glaciais que criam zonas que diminuem a velocidade dos
+                    inimigos e o dano causado a aliados.</p>
+                  <span class="rune-use">Use em: Supports de controle</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Livro de Feitiços Deslacrado</strong>
+                  <p>Fora de combate, pode trocar um Feitiço de Invocador por outro.</p>
+                  <span class="rune-use">Use em: Builds experimentais e flexíveis</span>
+                </div>
+                <div class="rune-item">
+                  <strong>Primeiro Ataque</strong>
+                  <p>Ao iniciar um combate contra um Campeão, você causa 7% de dano adicional por 3s e recebe ouro com
+                    base no dano causado.</p>
+                  <span class="rune-use">Use em: Campeões de poke que podem iniciar trades</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="rune-category">
+              <h4>Runas Menores</h4>
+              <div class="rune-grid-minor">
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Primeira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Flashtração Hextec</strong>
+                      <p>Enquanto o Flash estiver em Tempo de Recarga, ele é substituido pelo Flash Hextec</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Calçados Mágicos</strong>
+                      <p>Recebe botas grátis aos 12 minutos, chegam 45s mais cedo por takedown</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Reembolso</strong>
+                      <p>Recebe ouro de volta a comprar itens Lendários</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Segunda Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Tônico Triplo</strong>
+                      <p>Ganha elixires especiais grátis nos níveis 3, 6 e 9</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Tônico de Distorção no Tempo</strong>
+                      <p>Consumir poções cura mais rapidamente</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Entrega de Biscoitos</strong>
+                      <p>Biscoitos grátis a cada 2 minutos que concedem cura e vida permanente</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="rune-row">
+                  <div class="rune-minor-group">
+                    <h5>Terceira Fileira</h5>
+                    <div class="rune-minor-item">
+                      <strong>Perspicácia Cósmica</strong>
+                      <p>Ganha 18 de aceleração para Feitiço do Invocador e 10 para itens ativos</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Velocidade de Aproximação</strong>
+                      <p>Ganha MS ao se aproximar de inimigos com movimento prejudicado</p>
+                    </div>
+                    <div class="rune-minor-item">
+                      <strong>Quebra-Galho</strong>
+                      <p>A cada 5 atributos diferente recebido de itens, recebe Força Adaptativa adicional</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rune-tips">
+          <div class="card">
+            <h3>💡 Dicas Importantes</h3>
+            <ul>
+              <li><strong>Combine com seu estilo:</strong> ADCs preferem Precisão, Magos preferem Feitiçaria</li>
+              <li><strong>Adapte ao match-up:</strong> Contra poke, leve runas de sustain (Second Wind, Doran's Shield)
+              </li>
+              <li><strong>Considere o game plan:</strong> Early game? Dominação. Late game? Precisão/Feitiçaria</li>
+              <li><strong>Shards são importantes:</strong> Fragmentos afinam sua build - ajuste conforme necessário</li>
+              <li><strong>Use ferramentas externas:</strong> Sites como OP.GG ou U.GG podem guiar as escolhas baseadas
+                no
+                meta atual</li>
+            </ul>
+          </div>
+        </div>
+    </section>
+
+
+
+    <!-- Substituir a seção de feitiços no HTML -->
+    <section id="spells" class="content-section">
+      <h2>Feitiços de Invocador</h2>
+      <p style="text-align: center; margin-bottom: 2rem; color: #a09b8c;">
+        Clique nos feitiços para ouvir seus efeitos sonoros e ver mais detalhes!
+      </p>
+
+      <div class="spells-grid">
+        <div class="spell-card" data-spell="flash" data-color="#f4d800">
+          <h3>Flash</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/flash.png" alt="Flash" class="spell-icon">
+          </div>
+          <p>Teleporta instantaneamente para uma curta distância. O feitiço mais importante do jogo!</p>
+          <span class="cooldown">Cooldown: 300s</span>
+        </div>
+
+        <div class="spell-card" data-spell="ignite" data-color="#ff4444">
+          <h3>Ignite</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/ignite.png" alt="Ignite" class="spell-icon">
+          </div>
+          <p>Causa dano verdadeiro ao longo do tempo e aplica Grievous Wounds (reduz cura).</p>
+          <span class="cooldown">Cooldown: 180s</span>
+        </div>
+
+        <div class="spell-card" data-spell="heal" data-color="#44ff44">
+          <h3>Heal</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/heal.png" alt="Heal" class="spell-icon">
+          </div>
+          <p>Restaura vida sua e de um aliado próximo. Também garante velocidade de movimento.</p>
+          <span class="cooldown">Cooldown: 240s</span>
+        </div>
+
+        <div class="spell-card" data-spell="teleport" data-color="#A101FDFF">
+          <h3>Teleport</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/teleport.png" alt="Teleport" class="spell-icon">
+          </div>
+          <p>Teleporta para aliado, estrutura ou tropas. Vira Unleashed Teleport após 10 minutos.</p>
+          <span class="cooldown">Cooldown: 300s</span>
+        </div>
+
+        <div class="spell-card" data-spell="barrier" data-color="#FFD900FF">
+          <h3>Barrier</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/barrier.png" alt="Barrier" class="spell-icon">
+          </div>
+          <p>Cria um escudo temporário que dura 2.5 segundos.</p>
+          <span class="cooldown">Cooldown: 180s</span>
+        </div>
+
+        <div class="spell-card" data-spell="exhaust" data-color="#9C6D0FFF">
+          <h3>Exhaust</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/exhaust.png" alt="Exhaust" class="spell-icon">
+          </div>
+          <p>Reduz velocidade em 40% e dano causado pelo inimigo em 35%.</p>
+          <span class="cooldown">Cooldown: 240s</span>
+        </div>
+
+        <div class="spell-card" data-spell="cleanse" data-color="#44dddd">
+          <h3>Cleanse</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/cleanse.png" alt="Cleanse" class="spell-icon">
+          </div>
+          <p>Remove todos os debuffs e concede 75% de tenacidade por 3 segundos.</p>
+          <span class="cooldown">Cooldown: 240s</span>
+        </div>
+
+        <div class="spell-card" data-spell="ghost" data-color="#0A3DC9FF">
+          <h3>Ghost</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/ghost.png" alt="Ghost" class="spell-icon">
+          </div>
+          <p>Aumenta velocidade de movimento por 10 segundos. Ignora colisão de unidades.</p>
+          <span class="cooldown">Cooldown: 240s</span>
+        </div>
+
+        <div class="spell-card" data-spell="smite" data-color="#8b4513">
+          <h3>Smite</h3>
+          <div class="spell-icon-container">
+            <img src="assets/spells/smite.png" alt="Smite" class="spell-icon">
+          </div>
+          <p>Causa dano verdadeiro a monstros, minions ou pets. Essencial para junglers.</p>
+          <span class="cooldown">Cooldown: 90s</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="damage" class="content-section">
+      <h2>Tipos de Dano e Resistências</h2>
+      <div class="damage-types">
+        <div class="damage-card physical">
+          <h3>Dano Físico (AD)</h3>
+          <p>Baseado em Attack Damage (AD). Resistido por Armadura.</p>
+          <ul>
+            <li>Ataques básicos da maioria dos campeões</li>
+            <li>Habilidades de ADCs e alguns assassinos</li>
+            <li>Itens de armadura reduzem este dano</li>
+          </ul>
+        </div>
+        <div class="damage-card magical">
+          <h3>Dano Mágico (AP)</h3>
+          <p>Baseado em Ability Power (AP). Resistido por Resistência Mágica.</p>
+          <ul>
+            <li>Habilidades de magos</li>
+            <li>Alguns ataques especiais</li>
+            <li>Itens de RM reduzem este dano</li>
+          </ul>
+        </div>
+        <div class="damage-card true">
+          <h3>Dano Verdadeiro</h3>
+          <p>Não é resistido por nada. Sempre causa o valor total.</p>
+          <ul>
+            <li>Algumas habilidades especiais</li>
+            <li>Ignite, Smite</li>
+            <li>Não pode ser reduzido!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="champions" class="content-section">
+      <h2>Classes de Campeões</h2>
+      <p style="text-align: center; margin-bottom: 2rem; color: #a09b8c;">
+        Cada classe tem características únicas e contraclasses naturais. Clique nos cards para ver detalhes expandidos
+        sobre subclasses, campeões e itens recomendados.
+      </p>
+
+      <div class="champions-grid">
+        <div class="champion-class clickable" data-class="tank">
+          <div class="champion-class-header">
+            <img src="assets/classes/tank.png" alt="Tank" class="class-icon">
+            <h3>Tanks</h3>
+          </div>
+          <p>Resistência elevada, controle de multidão e iniciação. Sacrificam dano por durabilidade.</p>
+          <div class="champion-example">Ex: Malphite, Ornn, Sejuani</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Slayers, Mages
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco contra:</strong> Marksmen, Fighters
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Vanguard</h5>
+                <p>Tanks ofensivos que lideram o ataque, com alta mobilidade e iniciação forte.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/MalphiteSquare.png" alt="Malphite" class="champion-img">
+                    <span>Malphite</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/OrnnSquare.png" alt="Ornn" class="champion-img">
+                    <span>Ornn</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/LeonaSquare.png" alt="Leona" class="champion-img">
+                    <span>Leona</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Warden</h5>
+                <p>Tanks defensivos especializados em proteção e peel para aliados.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/BraumSquare.png" alt="Braum" class="champion-img">
+                    <span>Braum</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/TahmKenchSquare.png" alt="Tahm Kench" class="champion-img">
+                    <span>Tahm Kench</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/ShenSquare.png" alt="Shen" class="champion-img">
+                    <span>Shen</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/sunfire.png" alt="Sunfire Aegis">
+                      <span>Sunfire Aegis</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/kaenic.png" alt="Kaenic Rookern">
+                      <span>Kaenic Rookern</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/thornmail.png" alt="Thornmail">
+                      <span>Thornmail</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/randuin.png" alt="Randuin's Omen">
+                      <span>Randuin's Omen</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/spirit.png" alt="Spirit Visage">
+                      <span>Spirit Visage</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/warmog.png" alt="Warmog's Armor">
+                      <span>Warmog's Armor</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="champion-class clickable" data-class="fighter">
+          <div class="champion-class-header">
+            <img src="assets/classes/fighter.png" alt="Fighter" class="class-icon">
+            <h3>Fighters (Bruisers)</h3>
+          </div>
+          <p>Equilíbrio entre dano e resistência. Dominam combates prolongados de curta distância.</p>
+          <div class="champion-example">Ex: Darius, Camille, Jax</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Tanks, Assassinos
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco contra:</strong> Marksmen, Mages
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Juggernaut</h5>
+                <p>Fighters de alta durabilidade que dominam em combates prolongados, mas com baixa mobilidade.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/DariusSquare.png" alt="Darius" class="champion-img">
+                    <span>Darius</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/GarenSquare.png" alt="Garen" class="champion-img">
+                    <span>Garen</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/MordekaiserSquare.png" alt="Mordekaiser" class="champion-img">
+                    <span>Mordekaiser</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Diver</h5>
+                <p>Fighters com alta mobilidade que se especializam em mergulhar na backline inimiga.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/CamilleSquare.png" alt="Camille" class="champion-img">
+                    <span>Camille</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/IreliaSquare.png" alt="Irelia" class="champion-img">
+                    <span>Irelia</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/JarvanIVSquare.png" alt="Jarvan IV" class="champion-img">
+                    <span>Jarvan IV</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/sundered.png" alt="Sundered Sky">
+                      <span>Sundered Sky</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/black.png" alt="Black Cleaver">
+                      <span>Black Cleaver</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/sterak.png" alt="Sterak's Gage">
+                      <span>Sterak's Gage</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/death.png" alt="Death's Dance">
+                      <span>Death's Dance</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/hullbreaker.png" alt="Hullbreaker">
+                      <span>Hullbreaker</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/maw.png" alt="Maw of Malmortius">
+                      <span>Maw of Malmortius</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="champion-class clickable" data-class="slayer">
+          <div class="champion-class-header">
+            <img src="assets/classes/slayer.png" alt="Slayer" class="class-icon">
+            <h3>Slayers (Assassinos)</h3>
+          </div>
+          <p>Mobilidade extrema e dano em rajada. Especialistas em eliminar alvos prioritários rapidamente.</p>
+          <div class="champion-example">Ex: Zed, Yasuo, Katarina</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Marksmen, Mages
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco contra:</strong> Tanks, Fighters
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Assassin</h5>
+                <p>Especialistas em infiltração e eliminação rápida de alvos prioritários.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/ZedSquare.png" alt="Zed" class="champion-img">
+                    <span>Zed</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/KatarinaSquare.png" alt="Katarina" class="champion-img">
+                    <span>Katarina</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/TalonSquare.png" alt="Talon" class="champion-img">
+                    <span>Talon</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Skirmisher</h5>
+                <p>Assassinos que se destacam em combates 1v1 e pequenas escaramuças.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/YasuoSquare.png" alt="Yasuo" class="champion-img">
+                    <span>Yasuo</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/FioraSquare.png" alt="Fiora" class="champion-img">
+                    <span>Fiora</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/RivenSquare.png" alt="Riven" class="champion-img">
+                    <span>Riven</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/eclipse.png" alt="Eclipse">
+                      <span>Eclipse</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/youmuu.png" alt="Youmuu's Ghostblade">
+                      <span>Youmuu's Ghostblade</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/serpent.png" alt="Serpent's Fang">
+                      <span>Serpent's Fang</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/edge.png" alt="Edge of Night">
+                      <span>Edge of Night</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/axiom.png" alt="Axiom Arc">
+                      <span>Axiom Arc</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/collector.png" alt="The Collector">
+                      <span>The Collector</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="champion-class clickable" data-class="marksman">
+          <div class="champion-class-header">
+            <img src="assets/classes/marksman.png" alt="Marksman" class="class-icon">
+            <h3>Marksmen (ADC)</h3>
+          </div>
+          <p>Dano contínuo à distância baseado em ataques básicos. Principal fonte de DPS da equipe.</p>
+          <div class="champion-example">Ex: Jinx, Ashe, Kai'Sa</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Tanks, Fighters
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco contra:</strong> Slayers, Mages
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Critical Strike ADC</h5>
+                <p>Marksmen tradicionais focados em critical strike e ataques básicos.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/JinxSquare.png" alt="Jinx" class="champion-img">
+                    <span>Jinx</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/CaitlynSquare.png" alt="Caitlyn" class="champion-img">
+                    <span>Caitlyn</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/AsheSquare.png" alt="Ashe" class="champion-img">
+                    <span>Ashe</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>On-Hit ADC</h5>
+                <p>Marksmen que escalam com velocidade de ataque e efeitos on-hit.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/KaiSaSquare.png" alt="Kai'Sa" class="champion-img">
+                    <span>Kai'Sa</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/VarusSquare.png" alt="Varus" class="champion-img">
+                    <span>Varus</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/KogMawSquare.png" alt="Kog'Maw" class="champion-img">
+                    <span>Kog'Maw</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/kraken.png" alt="Kraken Slayer">
+                      <span>Kraken Slayer</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/infinity.png" alt="Infinity Edge">
+                      <span>Infinity Edge</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/lord.png" alt="Lord Dominik's Regards">
+                      <span>Lord Dominik's</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/bloodthirster.png" alt="Bloodthirster">
+                      <span>Bloodthirster</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/phantom.png" alt="Phantom Dancer">
+                      <span>Phantom Dancer</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/quicksilver.png" alt="Quicksilver Sash">
+                      <span>Quicksilver Sash</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="champion-class clickable" data-class="mage">
+          <div class="champion-class-header">
+            <img src="assets/classes/mage.png" alt="Mage" class="class-icon">
+            <h3>Mages</h3>
+          </div>
+          <p>Dano mágico em área e controle de multidão. Dominam através de habilidades poderosas.</p>
+          <div class="champion-example">Ex: Azir, Ahri, Syndra</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Marksmen, Slayers
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco contra:</strong> Tanks, Fighters
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Burst Mage</h5>
+                <p>Magos especializados em eliminar alvos rapidamente com combos de habilidades.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/SyndraSquare.png" alt="Syndra" class="champion-img">
+                    <span>Syndra</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/AnnieSquare.png" alt="Annie" class="champion-img">
+                    <span>Annie</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/VeigarSquare.png" alt="Veigar" class="champion-img">
+                    <span>Veigar</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Battle Mage</h5>
+                <p>Magos que entram no meio das lutas, causando dano sustentado em área.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/AzirSquare.png" alt="Azir" class="champion-img">
+                    <span>Azir</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/CassiopeiaSquare.png" alt="Cassiopeia" class="champion-img">
+                    <span>Cassiopeia</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/RyzeSquare.png" alt="Ryze" class="champion-img">
+                    <span>Ryze</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Artillery Mage</h5>
+                <p>Magos de longo alcance que causam dano de posições seguras.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/XerathSquare.png" alt="Xerath" class="champion-img">
+                    <span>Xerath</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/VelKozSquare.png" alt="Vel'Koz" class="champion-img">
+                    <span>Vel'Koz</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/ZiggsSquare.png" alt="Ziggs" class="champion-img">
+                    <span>Ziggs</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/ludens.png" alt="Luden's Companion">
+                      <span>Luden's Companion</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/malignance.png" alt="Malignance">
+                      <span>Malignance</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/rod.png" alt="Rod of Ages">
+                      <span>Rod of Ages</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/zhonya.png" alt="Zhonya's Hourglass">
+                      <span>Zhonya's Hourglass</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/shadowflame.png" alt="Shadowflame">
+                      <span>Shadowflame</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/rylai.png" alt="Rylai's Crystal Scepter">
+                      <span>Rylai's Crystal</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="champion-class clickable" data-class="controller">
+          <div class="champion-class-header">
+            <img src="assets/classes/controller.png" alt="Controller" class="class-icon">
+            <h3>Controllers (Supports)</h3>
+          </div>
+          <p>Utilidade e suporte. Amplificam o poder da equipe através de escudos, curas e controle.</p>
+          <div class="champion-example">Ex: Lulu, Thresh, Janna</div>
+          <div class="class-strengths">
+            <strong>Forte contra:</strong> Dependente da equipe
+          </div>
+          <div class="class-weaknesses">
+            <strong>Fraco quando:</strong> Sozinho no mapa
+          </div>
+
+          <div class="expanded-content">
+            <div class="subclasses-section">
+              <h4>Subclasses</h4>
+              <div class="subclass">
+                <h5>Enchanter</h5>
+                <p>Supports especializados em curar, dar escudos e buffar aliados.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/LuluSquare.png" alt="Lulu" class="champion-img">
+                    <span>Lulu</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/JannaSquare.png" alt="Janna" class="champion-img">
+                    <span>Janna</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/SorakaSquare.png" alt="Soraka" class="champion-img">
+                    <span>Soraka</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subclass">
+                <h5>Catcher</h5>
+                <p>Supports focados em engajar e fazer picks isolados no inimigo.</p>
+                <div class="champions-list">
+                  <div class="champion-item">
+                    <img src="assets/champions/ThreshSquare.png" alt="Thresh" class="champion-img">
+                    <span>Thresh</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/BlitzcrankSquare.png" alt="Blitzcrank" class="champion-img">
+                    <span>Blitzcrank</span>
+                  </div>
+                  <div class="champion-item">
+                    <img src="assets/champions/PykeSquare.png" alt="Pyke" class="champion-img">
+                    <span>Pyke</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="items-section">
+              <h4>Itens Recomendados</h4>
+              <div class="recommended-items">
+                <div class="item-category">
+                  <h6>Core Items</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/moonstone.png" alt="Moonstone Renewer">
+                      <span>Moonstone Renewer</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/locket.png" alt="Locket of Iron Solari">
+                      <span>Locket of Solari</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/redemption.png" alt="Redemption">
+                      <span>Redemption</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item-category">
+                  <h6>Situacionais</h6>
+                  <div class="items-grid">
+                    <div class="item">
+                      <img src="assets/items/staff.png" alt="Staff of Flowing Water">
+                      <span>Staff of Water</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/mikael.png" alt="Mikael's Blessing">
+                      <span>Mikael's Blessing</span>
+                    </div>
+                    <div class="item">
+                      <img src="assets/items/wardstone.png" alt="Vigilant Wardstone">
+                      <span>Wardstone</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="class-diagram-section">
+        <h3>Sistema de Contraclasses</h3>
+        <div class="card">
+          <p>📊 <strong>Cada classe tem vantagens contra algumas e desvantagens contra outras:</strong></p>
+          <ul>
+            <li><strong>Tanks</strong> resistem bem a burst, mas sofrem contra dano contínuo</li>
+            <li><strong>Fighters</strong> vencem em duelos 1v1, mas são kitados por campeões à distância</li>
+            <li><strong>Slayers</strong> eliminam alvos frágeis, mas são vulneráveis quando focados</li>
+            <li><strong>Marksmen</strong> destroem tanques, mas são frágeis contra assassinos</li>
+            <li><strong>Mages</strong> controlem fights, mas dependem de cooldowns</li>
+            <li><strong>Controllers</strong> são poderosos em team fights, mas fracos sozinhos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="lanes" class="content-section">
+      <h2>As Lanes do Mapa</h2>
+      <div class="lanes-container">
+        <div class="map-representation">
+          <div class="lane top-lane">
+            <h3>Top Lane</h3>
+            <p>Lane superior. Geralmente 1v1. Foco em farm e escala.</p>
+          </div>
+          <div class="lane jungle">
+            <h3>Jungle</h3>
+            <p>Área entre as lanes. Monstros neutros e objetivos.</p>
+          </div>
+          <div class="lane mid-lane">
+            <h3>Mid Lane</h3>
+            <p>Lane central. Lane mais curta. Fácil de gankar e ajudar outras lanes.</p>
+          </div>
+          <div class="lane bot-lane">
+            <h3>Bot Lane</h3>
+            <p>Lane inferior. Duo lane (ADC + Support). Dragon próximo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="minions" class="content-section">
+      <h2>Minions e Gold</h2>
+      <div class="minions-gold">
+        <div class="card">
+          <h3>Tipos de Minions</h3>
+          <ul>
+            <li><strong>Melee Minions:</strong> 21-22 gold</li>
+            <li><strong>Caster Minions:</strong> 14-15 gold</li>
+            <li><strong>Cannon Minions:</strong> 60-90 gold (spawn a cada 3 waves)</li>
+            <li><strong>Super Minions:</strong> 25-40 gold (quando inibidor é destruído)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Importância do Gold</h3>
+          <ul>
+            <li>Compra de itens</li>
+            <li>Melhoria de habilidades</li>
+            <li>Controle de objetivos</li>
+            <li>Vantagem sobre inimigos</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Last Hit</h3>
+          <p>A técnica mais importante! Você só ganha gold se der o último hit no minion. Pratique no training mode!</p>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer>
-    <p>&copy; 2025 ReservaAI. Todos os direitos reservados.</p>
+    <p>Boa sorte no Rift, Invocador! 🎮</p>
   </footer>
+
+  <script src="/scripts/script.js"></script>
 </body>
+
 </html>
