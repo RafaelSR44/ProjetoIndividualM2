@@ -1,0 +1,70 @@
+<%- include('../partials/header', { title: 'Minhas Runas', activePage: 'myRunes' }) %>
+
+<section class="content-section active">
+  <h2>Minhas Páginas de Runas</h2>
+  
+  <div class="my-runes-actions">
+    <a href="/runes/builder" class="nav-btn">Criar Nova Página de Runas</a>
+  </div>
+  
+  <% if (runePages && runePages.length > 0) { %>
+    <div class="rune-pages-grid">
+      <% runePages.forEach(runePage => { %>
+        <div class="rune-page-card" data-id="<%= runePage.id %>">
+          <div class="rune-page-header">
+            <h3><%= runePage.name %></h3>
+            <span class="created-at">Criada em: <%= new Date(runePage.created_at).toLocaleDateString() %></span>
+          </div>
+          
+          <div class="rune-page-content">
+            <div class="rune-trees">
+              <div class="rune-primary-tree">
+                <img src="/assets/runes/<%= runePage.primary_tree %>.png" alt="<%= runePage.primary_tree %>" class="tree-icon">
+                <span><%= getTreeName(runePage.primary_tree) %></span>
+              </div>
+              <div class="rune-secondary-tree">
+                <img src="/assets/runes/<%= runePage.secondary_tree %>.png" alt="<%= runePage.secondary_tree %>" class="tree-icon">
+                <span><%= getTreeName(runePage.secondary_tree) %></span>
+              </div>
+            </div>
+            
+            <div class="rune-page-details">
+              <p><strong>Keystone:</strong> <%= runePage.primary_keystone %></p>
+              <p><strong>Runas Primárias:</strong> <%= runePage.primary_slot1 %>, <%= runePage.primary_slot2 %>, <%= runePage.primary_slot3 %></p>
+              <p><strong>Runas Secundárias:</strong> <%= runePage.secondary_slot1 %>, <%= runePage.secondary_slot2 %></p>
+              <p><strong>Fragmentos:</strong> <%= runePage.shard1 %>, <%= runePage.shard2 %>, <%= runePage.shard3 %></p>
+            </div>
+          </div>
+          
+          <div class="rune-page-actions">
+            <button class="delete-rune-btn" data-id="<%= runePage.id %>">Excluir</button>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div class="empty-rune-pages">
+      <div class="card">
+        <h3>Nenhuma página de runas encontrada</h3>
+        <p>Você ainda não criou nenhuma página de runas. Comece criando uma nova página!</p>
+        <a href="/runes/builder" class="nav-btn">Criar Primeira Página</a>
+      </div>
+    </div>
+  <% } %>
+</section>
+
+<script src="/scripts/my-runes.js"></script>
+<%- include('../partials/footer') %>
+
+<%
+function getTreeName(treeId) {
+  const trees = {
+    'precisao': 'Precisão',
+    'dominacao': 'Dominação',
+    'feiticaria': 'Feitiçaria',
+    'determinacao': 'Determinação',
+    'inspiracao': 'Inspiração'
+  };
+  return trees[treeId] || treeId;
+}
+%>

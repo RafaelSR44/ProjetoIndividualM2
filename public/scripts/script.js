@@ -2,6 +2,85 @@
 document.addEventListener('DOMContentLoaded', function () {
   console.log('DOM loaded, initializing League of Legends guide...');
 
+  // Initialize animations for all pages
+  initializeAnimations();
+
+  // Initialize specific features when the elements exist
+  if (document.querySelector('.rune-header')) {
+    initializeCollapsibleRunes();
+    animateRuneEntrance();
+  }
+
+  if (document.querySelector('.spell-card')) {
+    initializeSpellAnimations();
+  }
+
+  if (document.querySelector('.champion-class')) {
+    initializeChampionClasses();
+  }
+
+  if (document.querySelector('.damage-card')) {
+    initializeDamageCards();
+  }
+
+  if (document.getElementById('minions')) {
+    initializeMinionsGold();
+  }
+
+    // Initialize specific features when the elements exist
+  if (document.querySelector('.rune-header')) {
+    console.log('Runas encontradas na página, inicializando...');
+    initializeCollapsibleRunes();
+    animateRuneEntrance();
+  } else {
+    console.log('Nenhuma runa encontrada na página');
+  }
+  
+  if (document.querySelector('.champion-class.clickable')) {
+    console.log('Classes de campeões encontradas na página, inicializando...');
+    initializeChampionClasses();
+  } else {
+    console.log('Nenhuma classe de campeão encontrada na página');
+  }
+
+  initializeKonamiCode();
+
+  console.log('All features initialized successfully!');
+
+
+  // Função para runas colapsáveis
+  function initializeCollapsibleRunes() {
+    const runeHeaders = document.querySelectorAll('.rune-header');
+
+    runeHeaders.forEach(header => {
+      header.addEventListener('click', function () {
+        const runeTree = header.parentElement;
+        const isExpanded = runeTree.classList.contains('expanded');
+
+        // Colapsar todas as outras runas primeiro
+        document.querySelectorAll('.rune-tree').forEach(tree => {
+          if (tree !== runeTree) {
+            tree.classList.remove('expanded');
+          }
+        });
+
+        // Toggle da runa clicada
+        if (isExpanded) {
+          runeTree.classList.remove('expanded');
+        } else {
+          runeTree.classList.add('expanded');
+        }
+      });
+    });
+  }
+
+  function initializeAnimations() {
+    const cards = document.querySelectorAll('.card, .spell-card, .damage-card, .champion-class, .lane');
+    cards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+  }
+
   // Get navigation elements
   const navButtons = document.querySelectorAll('.nav-btn');
   const contentSections = document.querySelectorAll('.content-section');
@@ -131,6 +210,77 @@ document.addEventListener('DOMContentLoaded', function () {
           runeTree.classList.add('expanded');
         }
       });
+    });
+  }
+
+  // Função para runas colapsáveis
+  function initializeCollapsibleRunes() {
+    console.log('Inicializando runas colapsáveis');
+    const runeHeaders = document.querySelectorAll('.rune-header');
+
+    runeHeaders.forEach(header => {
+      header.addEventListener('click', function () {
+        console.log('Runa clicada:', header);
+        const runeTree = header.parentElement;
+        const isExpanded = runeTree.classList.contains('expanded');
+
+        // Colapsar todas as outras runas primeiro
+        document.querySelectorAll('.rune-tree').forEach(tree => {
+          if (tree !== runeTree) {
+            tree.classList.remove('expanded');
+          }
+        });
+
+        // Toggle da runa clicada
+        if (isExpanded) {
+          runeTree.classList.remove('expanded');
+        } else {
+          runeTree.classList.add('expanded');
+        }
+      });
+    });
+  }
+
+  // Função para classes de campeões
+  function initializeChampionClasses() {
+    console.log('Inicializando classes de campeões');
+    const championClasses = document.querySelectorAll('.champion-class.clickable');
+
+    championClasses.forEach(championClass => {
+      championClass.addEventListener('click', function () {
+        console.log('Classe de campeão clicada:', championClass);
+        const isExpanded = championClass.classList.contains('expanded');
+
+        // Colapsar todas as outras classes primeiro
+        championClasses.forEach(otherClass => {
+          if (otherClass !== championClass) {
+            otherClass.classList.remove('expanded');
+          }
+        });
+
+        // Toggle da classe clicada
+        if (isExpanded) {
+          championClass.classList.remove('expanded');
+        } else {
+          championClass.classList.add('expanded');
+          // Smooth scroll para o card expandido após a animação
+          setTimeout(() => {
+            championClass.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest'
+            });
+          }, 300);
+        }
+      });
+
+      // Prevenir que cliques nos elementos expandidos fechem o card
+      const expandedContent = championClass.querySelector('.expanded-content');
+      if (expandedContent) {
+        expandedContent.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
+      }
     });
   }
 
@@ -271,8 +421,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Substituir a seção de spell animations no JavaScript
 
-// Mapa de efeitos sonoros dos feitiços
-const spellSounds = {
+  // Mapa de efeitos sonoros dos feitiços
+  const spellSounds = {
     flash: 'assets/sounds/flash.mp3',
     ignite: 'assets/sounds/ignite.mp3',
     heal: 'assets/sounds/heal.mp3',
@@ -282,127 +432,127 @@ const spellSounds = {
     cleanse: 'assets/sounds/cleanse.mp3',
     ghost: 'assets/sounds/ghost.mp3',
     smite: 'assets/sounds/smite.mp3'
-};
+  };
 
-// Função para criar efeito de ondulação
-function createRippleEffect(event, element) {
+  // Função para criar efeito de ondulação
+  function createRippleEffect(event, element) {
     const ripple = document.createElement('span');
     const rect = element.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
     const x = event.clientX - rect.left - size / 2;
     const y = event.clientY - rect.top - size / 2;
-    
+
     ripple.classList.add('ripple');
     ripple.style.width = ripple.style.height = size + 'px';
     ripple.style.left = x + 'px';
     ripple.style.top = y + 'px';
-    
-    element.appendChild(ripple);
-    
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
-}
 
-// Função para tocar efeito sonoro
-function playSpellSound(spellName) {
+    element.appendChild(ripple);
+
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  }
+
+  // Função para tocar efeito sonoro
+  function playSpellSound(spellName) {
     const audio = new Audio(spellSounds[spellName]);
     audio.volume = 0.5; // Volume 50%
     audio.play().catch(e => {
-        console.log('Não foi possível reproduzir o som:', e);
+      console.log('Não foi possível reproduzir o som:', e);
     });
-}
+  }
 
-// Spell cooldown animation - versão aprimorada
-function initializeSpellAnimations() {
+  // Spell cooldown animation - versão aprimorada
+  function initializeSpellAnimations() {
     const spellCards = document.querySelectorAll('.spell-card');
     const activeSpells = new Set(); // Para rastrear feitiços em cooldown
-    
-    spellCards.forEach(card => {
-        card.addEventListener('click', function(event) {
-            const spellName = card.getAttribute('data-spell');
-            const spellColor = card.getAttribute('data-color');
-            const cooldownElement = card.querySelector('.cooldown');
-            const originalText = cooldownElement.textContent;
-            
-            // Evitar clicks múltiplos enquanto em cooldown
-            if (activeSpells.has(spellName)) {
-                return;
-            }
-            
-            // Adicionar feitiço ao conjunto de ativos
-            activeSpells.add(spellName);
-            
-            // Criar efeito de ondulação
-            createRippleEffect(event, card);
-            
-            // Tocar efeito sonoro
-            playSpellSound(spellName);
-            
-            // Aplicar efeitos visuais
-            card.style.setProperty('--glow-color', spellColor);
-            card.classList.add('glowing', 'pulsing', 'active');
-            
-            // Efeito de pulso na imagem
-            const spellIcon = card.querySelector('.spell-icon');
-            spellIcon.style.boxShadow = `0 0 30px ${spellColor}`;
-            
-            // Mudar texto para "Ativado!"
-            cooldownElement.textContent = 'Ativado!';
-            
-            // Extrair número do cooldown do texto original
-            const cooldownMatch = originalText.match(/(\d+)s/);
-            let cooldownSeconds = cooldownMatch ? parseInt(cooldownMatch[1]) : 5;
-            
-            // Animação de countdown
-            let countdown = cooldownSeconds;
-            
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    cooldownElement.textContent = `${countdown}s`;
-                } else {
-                    // Limpar efeitos após término do cooldown
-                    clearInterval(countdownInterval);
-                    
-                    // Remover classes de efeito
-                    card.classList.remove('glowing', 'pulsing', 'active');
-                    spellIcon.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
-                    cooldownElement.textContent = originalText;
-                    
-                    // Remover feitiço do conjunto de ativos
-                    activeSpells.delete(spellName);
-                    
-                    // Efeito visual de "pronto para usar"
-                    card.style.animation = 'spell-ready 0.5s ease';
-                    setTimeout(() => {
-                        card.style.animation = '';
-                    }, 500);
-                }
-            }, 1000);
-        });
-        
-        // Hover effect adicional
-        card.addEventListener('mouseenter', function() {
-            if (!activeSpells.has(card.getAttribute('data-spell'))) {
-                const spellColor = card.getAttribute('data-color');
-                const spellIcon = card.querySelector('.spell-icon');
-                spellIcon.style.boxShadow = `0 0 15px ${spellColor}`;
-            }
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            if (!activeSpells.has(card.getAttribute('data-spell'))) {
-                const spellIcon = card.querySelector('.spell-icon');
-                spellIcon.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
-            }
-        });
-    });
-}
 
-// Animação CSS adicional para quando o feitiço fica pronto
-const spellReadyStyle = document.createElement('style');
-spellReadyStyle.textContent = `
+    spellCards.forEach(card => {
+      card.addEventListener('click', function (event) {
+        const spellName = card.getAttribute('data-spell');
+        const spellColor = card.getAttribute('data-color');
+        const cooldownElement = card.querySelector('.cooldown');
+        const originalText = cooldownElement.textContent;
+
+        // Evitar clicks múltiplos enquanto em cooldown
+        if (activeSpells.has(spellName)) {
+          return;
+        }
+
+        // Adicionar feitiço ao conjunto de ativos
+        activeSpells.add(spellName);
+
+        // Criar efeito de ondulação
+        createRippleEffect(event, card);
+
+        // Tocar efeito sonoro
+        playSpellSound(spellName);
+
+        // Aplicar efeitos visuais
+        card.style.setProperty('--glow-color', spellColor);
+        card.classList.add('glowing', 'pulsing', 'active');
+
+        // Efeito de pulso na imagem
+        const spellIcon = card.querySelector('.spell-icon');
+        spellIcon.style.boxShadow = `0 0 30px ${spellColor}`;
+
+        // Mudar texto para "Ativado!"
+        cooldownElement.textContent = 'Ativado!';
+
+        // Extrair número do cooldown do texto original
+        const cooldownMatch = originalText.match(/(\d+)s/);
+        let cooldownSeconds = cooldownMatch ? parseInt(cooldownMatch[1]) : 5;
+
+        // Animação de countdown
+        let countdown = cooldownSeconds;
+
+        const countdownInterval = setInterval(() => {
+          countdown--;
+          if (countdown > 0) {
+            cooldownElement.textContent = `${countdown}s`;
+          } else {
+            // Limpar efeitos após término do cooldown
+            clearInterval(countdownInterval);
+
+            // Remover classes de efeito
+            card.classList.remove('glowing', 'pulsing', 'active');
+            spellIcon.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
+            cooldownElement.textContent = originalText;
+
+            // Remover feitiço do conjunto de ativos
+            activeSpells.delete(spellName);
+
+            // Efeito visual de "pronto para usar"
+            card.style.animation = 'spell-ready 0.5s ease';
+            setTimeout(() => {
+              card.style.animation = '';
+            }, 500);
+          }
+        }, 1000);
+      });
+
+      // Hover effect adicional
+      card.addEventListener('mouseenter', function () {
+        if (!activeSpells.has(card.getAttribute('data-spell'))) {
+          const spellColor = card.getAttribute('data-color');
+          const spellIcon = card.querySelector('.spell-icon');
+          spellIcon.style.boxShadow = `0 0 15px ${spellColor}`;
+        }
+      });
+
+      card.addEventListener('mouseleave', function () {
+        if (!activeSpells.has(card.getAttribute('data-spell'))) {
+          const spellIcon = card.querySelector('.spell-icon');
+          spellIcon.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.4)';
+        }
+      });
+    });
+  }
+
+  // Animação CSS adicional para quando o feitiço fica pronto
+  const spellReadyStyle = document.createElement('style');
+  spellReadyStyle.textContent = `
     @keyframes spell-ready {
         0% { border-color: #463714; }
         50% { 
@@ -412,7 +562,7 @@ spellReadyStyle.textContent = `
         100% { border-color: #463714; }
     }
 `;
-document.head.appendChild(spellReadyStyle);
+  document.head.appendChild(spellReadyStyle);
 
 
   // Damage calculator
@@ -460,18 +610,18 @@ document.head.appendChild(spellReadyStyle);
 
   // Enhanced Champion Class Interactions with Expansion
   const championClasses = document.querySelectorAll('.champion-class.clickable');
-  
+
   championClasses.forEach(championClass => {
-    championClass.addEventListener('click', function() {
+    championClass.addEventListener('click', function () {
       const isExpanded = championClass.classList.contains('expanded');
-      
+
       // Colapsar todas as outras classes primeiro
       championClasses.forEach(otherClass => {
         if (otherClass !== championClass) {
           otherClass.classList.remove('expanded');
         }
       });
-      
+
       // Toggle da classe clicada
       if (isExpanded) {
         championClass.classList.remove('expanded');
@@ -479,56 +629,56 @@ document.head.appendChild(spellReadyStyle);
         championClass.classList.add('expanded');
         // Smooth scroll para o card expandido após a animação
         setTimeout(() => {
-          championClass.scrollIntoView({ 
-            behavior: 'smooth', 
+          championClass.scrollIntoView({
+            behavior: 'smooth',
             block: 'start',
             inline: 'nearest'
           });
         }, 300);
       }
     });
-    
+
     // Prevenir que cliques nos elementos expandidos fechem o card
     const expandedContent = championClass.querySelector('.expanded-content');
     if (expandedContent) {
-      expandedContent.addEventListener('click', function(e) {
+      expandedContent.addEventListener('click', function (e) {
         e.stopPropagation();
       });
     }
   });
-  
+
   // Função para adicionar tooltips aos itens e campeões
   function initializeChampionTooltips() {
     // Tooltips para campeões
     const championItems = document.querySelectorAll('.champion-item');
     championItems.forEach(item => {
-      item.addEventListener('mouseenter', function(e) {
+      item.addEventListener('mouseenter', function (e) {
         const championName = item.querySelector('span').textContent;
         showTooltip(e, `${championName} - Clique para mais informações`);
       });
-      
+
       item.addEventListener('mouseleave', hideTooltip);
-      
+
       // Adicionar funcionalidade de clique nos campeões
-      item.addEventListener('click', function() {
+      item.addEventListener('click', function () {
         const championName = item.querySelector('span').textContent;
         showChampionInfo(championName);
       });
     });
-    
+
     // Tooltips para itens
     const items = document.querySelectorAll('.item');
     items.forEach(item => {
-      item.addEventListener('mouseenter', function(e) {
+      item.addEventListener('mouseenter', function (e) {
         const itemName = item.querySelector('span').textContent;
         const itemDescription = getItemDescription(itemName);
         showTooltip(e, `${itemName}<br>${itemDescription}`);
       });
-      
+
       item.addEventListener('mouseleave', hideTooltip);
     });
   }
-  
+
   // Função para mostrar tooltip
   function showTooltip(e, content) {
     const tooltip = document.createElement('div');
@@ -547,14 +697,14 @@ document.head.appendChild(spellReadyStyle);
       pointer-events: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     `;
-    
+
     document.body.appendChild(tooltip);
-    
+
     const rect = e.target.getBoundingClientRect();
     tooltip.style.left = `${rect.left + window.scrollX}px`;
     tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
   }
-  
+
   // Função para esconder tooltip
   function hideTooltip() {
     const tooltip = document.querySelector('.champion-tooltip');
@@ -562,7 +712,7 @@ document.head.appendChild(spellReadyStyle);
       tooltip.remove();
     }
   }
-  
+
   // Função para mostrar informações do campeão
   function showChampionInfo(championName) {
     const overlay = document.createElement('div');
@@ -578,7 +728,7 @@ document.head.appendChild(spellReadyStyle);
       justify-content: center;
       align-items: center;
     `;
-    
+
     const popup = document.createElement('div');
     popup.style.cssText = `
       background: #1e2d50;
@@ -590,7 +740,7 @@ document.head.appendChild(spellReadyStyle);
       width: 90%;
       text-align: center;
     `;
-    
+
     popup.innerHTML = `
       <h3 style="color: #C8A964; margin-bottom: 1rem; font-size: 1.5rem;">${championName}</h3>
       <p style="margin-bottom: 1.5rem;">Para mais informações detalhadas sobre este campeão, visite:</p>
@@ -604,17 +754,17 @@ document.head.appendChild(spellReadyStyle);
         Fechar
       </button>
     `;
-    
+
     overlay.appendChild(popup);
     document.body.appendChild(overlay);
-    
+
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.remove();
       }
     });
   }
-  
+
   // Função para obter descrição dos itens
   function getItemDescription(itemName) {
     const itemDescriptions = {
@@ -655,13 +805,13 @@ document.head.appendChild(spellReadyStyle);
       'Mikael\'s Blessing': 'Remove debuffs e cura',
       'Wardstone': 'Mais wards e stats extras'
     };
-    
+
     return itemDescriptions[itemName] || 'Item poderoso do League of Legends';
   }
-  
+
   // Inicializar tooltips após o DOM carregar
   initializeChampionTooltips();
-  
+
   // Função para animar entrada dos cards
   function animateChampionCards() {
     const cards = document.querySelectorAll('.champion-class');
@@ -672,7 +822,7 @@ document.head.appendChild(spellReadyStyle);
       card.style.animationDelay = `${index * 0.1}s`;
     });
   }
-  
+
   // Executar animação
   animateChampionCards();
 
@@ -994,7 +1144,7 @@ document.head.appendChild(spellReadyStyle);
     document.body.appendChild(resultOverlay);
   }
 
-    // Interactive rune tree selector
+  // Interactive rune tree selector
   function createRuneSelector() {
     const selectorButton = document.createElement('button');
     selectorButton.textContent = '🎯 Construir Página de Runas';
@@ -1104,7 +1254,7 @@ document.head.appendChild(spellReadyStyle);
     overlay.appendChild(builder);
     document.body.appendChild(overlay);
 
-    
+
   }
 
   // Versão alternativa mais robusta

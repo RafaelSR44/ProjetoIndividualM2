@@ -1,0 +1,194 @@
+<%- include('../partials/header', { title: 'Construtor de Runas', activePage: 'runeBuilder' }) %>
+
+<section class="content-section active">
+  <h2>Construtor de Páginas de Runas</h2>
+  
+  <div class="rune-builder-container">
+    <div class="builder-form">
+      <h3>Nova Página de Runas</h3>
+      <form id="runeForm">
+        <div class="form-group">
+          <label for="runeName">Nome da Página:</label>
+          <input type="text" id="runeName" name="name" required placeholder="Ex: Ahri Mid">
+        </div>
+        
+        <div class="form-group">
+          <label>Árvore Primária:</label>
+          <div class="tree-options">
+            <div class="tree-option">
+              <input type="radio" id="primary-precision" name="primaryTree" value="precisao" required>
+              <label for="primary-precision">
+                <img src="/assets/runes/precision.png" alt="Precisão">
+                <span>Precisão</span>
+              </label>
+            </div>
+            <div class="tree-option">
+              <input type="radio" id="primary-domination" name="primaryTree" value="dominacao">
+              <label for="primary-domination">
+                <img src="/assets/runes/domination.png" alt="Dominação">
+                <span>Dominação</span>
+              </label>
+            </div>
+            <div class="tree-option">
+              <input type="radio" id="primary-sorcery" name="primaryTree" value="feiticaria">
+              <label for="primary-sorcery">
+                <img src="/assets/runes/sorcery.png" alt="Feitiçaria">
+                <span>Feitiçaria</span>
+              </label>
+            </div>
+            <div class="tree-option">
+              <input type="radio" id="primary-resolve" name="primaryTree" value="determinacao">
+              <label for="primary-resolve">
+                <img src="/assets/runes/resolve.png" alt="Determinação">
+                <span>Determinação</span>
+              </label>
+            </div>
+            <div class="tree-option">
+              <input type="radio" id="primary-inspiration" name="primaryTree" value="inspiracao">
+              <label for="primary-inspiration">
+                <img src="/assets/runes/inspiration.png" alt="Inspiração">
+                <span>Inspiração</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Keystone Runes (muda dinamicamente com JavaScript) -->
+        <div class="form-group" id="keystone-container" style="display: none;">
+          <label>Runa Chave:</label>
+          <div class="rune-options" id="keystone-options"></div>
+        </div>
+        
+        <!-- Primary Rune Slots (muda dinamicamente com JavaScript) -->
+        <div class="form-group" id="primary-slot1-container" style="display: none;">
+          <label>Linha 1:</label>
+          <div class="rune-options" id="primary-slot1-options"></div>
+        </div>
+        
+        <div class="form-group" id="primary-slot2-container" style="display: none;">
+          <label>Linha 2:</label>
+          <div class="rune-options" id="primary-slot2-options"></div>
+        </div>
+        
+        <div class="form-group" id="primary-slot3-container" style="display: none;">
+          <label>Linha 3:</label>
+          <div class="rune-options" id="primary-slot3-options"></div>
+        </div>
+        
+        <!-- Secondary Tree -->
+        <div class="form-group">
+          <label>Árvore Secundária:</label>
+          <div class="tree-options" id="secondary-tree-options">
+            <!-- Opções geradas dinamicamente via JavaScript para evitar a seleção da mesma árvore -->
+          </div>
+        </div>
+        
+        <!-- Secondary Rune Slots (muda dinamicamente com JavaScript) -->
+        <div class="form-group" id="secondary-slots-container" style="display: none;">
+          <label>Escolha 2 runas secundárias:</label>
+          <div id="secondary-slots-options"></div>
+        </div>
+        
+        <!-- Stat Shards -->
+        <div class="form-group">
+          <label>Fragmentos Estatísticos:</label>
+          
+          <div class="shard-row">
+            <label>Linha 1:</label>
+            <div class="shard-options">
+              <div class="shard-option">
+                <input type="radio" id="shard1-adaptive" name="shard1" value="adaptive_force" required>
+                <label for="shard1-adaptive">
+                  <img src="/assets/shards/adaptive.png" alt="Adaptive Force">
+                  <span>Força Adaptativa</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard1-as" name="shard1" value="attack_speed">
+                <label for="shard1-as">
+                  <img src="/assets/shards/attack_speed.png" alt="Attack Speed">
+                  <span>Velocidade de Ataque</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard1-ah" name="shard1" value="ability_haste">
+                <label for="shard1-ah">
+                  <img src="/assets/shards/ability_haste.png" alt="Ability Haste">
+                  <span>Aceleração de Habilidade</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="shard-row">
+            <label>Linha 2:</label>
+            <div class="shard-options">
+              <div class="shard-option">
+                <input type="radio" id="shard2-adaptive" name="shard2" value="adaptive_force" required>
+                <label for="shard2-adaptive">
+                  <img src="/assets/shards/adaptive.png" alt="Adaptive Force">
+                  <span>Força Adaptativa</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard2-armor" name="shard2" value="armor">
+                <label for="shard2-armor">
+                  <img src="/assets/shards/armor.png" alt="Armor">
+                  <span>Armadura</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard2-mr" name="shard2" value="magic_resist">
+                <label for="shard2-mr">
+                  <img src="/assets/shards/magic_resist.png" alt="Magic Resist">
+                  <span>Resistência Mágica</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="shard-row">
+            <label>Linha 3:</label>
+            <div class="shard-options">
+              <div class="shard-option">
+                <input type="radio" id="shard3-health" name="shard3" value="health" required>
+                <label for="shard3-health">
+                  <img src="/assets/shards/health.png" alt="Health">
+                  <span>Vida</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard3-armor" name="shard3" value="armor">
+                <label for="shard3-armor">
+                  <img src="/assets/shards/armor.png" alt="Armor">
+                  <span>Armadura</span>
+                </label>
+              </div>
+              <div class="shard-option">
+                <input type="radio" id="shard3-mr" name="shard3" value="magic_resist">
+                <label for="shard3-mr">
+                  <img src="/assets/shards/magic_resist.png" alt="Magic Resist">
+                  <span>Resistência Mágica</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="nav-btn save-rune-btn">Salvar Página de Runas</button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="rune-preview">
+      <h3>Visualização</h3>
+      <div id="rune-preview-content">
+        <p class="empty-state">Selecione as runas para visualizar</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/scripts/rune-builder.js"></script>
+<%- include('../partials/footer') %>
