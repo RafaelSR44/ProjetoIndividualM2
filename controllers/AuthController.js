@@ -10,9 +10,22 @@ exports.loginForm = (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    console.log('Login: Dados recebidos', req.body);
     const { username, password } = req.body;
     
+    // Verificar se recebemos os dados do formulário
+    if (!username || !password) {
+      console.error('Dados de login incompletos');
+      return res.render('auth/login', {
+        title: 'Login',
+        activePage: 'login',
+        error: 'Por favor, preencha todos os campos'
+      });
+    }
+    
     const user = await User.findByUsername(username);
+    console.log('Usuário encontrado:', user ? 'Sim' : 'Não');
+    
     if (!user) {
       return res.render('auth/login', {
         title: 'Login',
@@ -22,6 +35,8 @@ exports.login = async (req, res) => {
     }
 
     const isValid = await User.verifyPassword(user, password);
+    console.log('Senha válida:', isValid ? 'Sim' : 'Não');
+    
     if (!isValid) {
       return res.render('auth/login', {
         title: 'Login',
@@ -30,19 +45,23 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Configurar sessão
     req.session.user = {
       id: user.id,
       username: user.username,
       email: user.email
     };
-
-    res.redirect('/');
+    
+    console.log('Sessão configurada:', req.session.user);
+    console.log('Redirecionando para a página inicial');
+    
+    return res.redirect('/');
   } catch (error) {
     console.error('Erro de login:', error);
     res.render('auth/login', {
       title: 'Login',
       activePage: 'login',
-      error: 'Ocorreu um erro ao fazer login'
+      error: 'Ocorreu um erro ao fazer login: ' + error.message
     });
   }
 };
@@ -56,7 +75,18 @@ exports.registerForm = (req, res) => {
 
 exports.register = async (req, res) => {
   try {
+    console.log('Register: Dados recebidos', req.body);
     const { username, email, password, confirmPassword } = req.body;
+    
+    // Verificar se recebemos os dados do formulário
+    if (!username || !email || !password || !confirmPassword) {
+      console.error('Dados de registro incompletos');
+      return res.render('auth/register', {
+        title: 'Registro',
+        activePage: 'register',
+        error: 'Por favor, preencha todos os campos'
+      });
+    }
     
     if (password !== confirmPassword) {
       return res.render('auth/register', {
@@ -84,20 +114,27 @@ exports.register = async (req, res) => {
       });
     }
 
+    console.log('Criando novo usuário...');
     const user = await User.create(username, email, password);
+    console.log('Usuário criado com sucesso:', user);
+    
+    // Configurar sessão
     req.session.user = {
       id: user.id,
       username: user.username,
       email: user.email
     };
-
-    res.redirect('/');
+    
+    console.log('Sessão configurada:', req.session.user);
+    console.log('Redirecionando para a página inicial');
+    
+    return res.redirect('/');
   } catch (error) {
     console.error('Erro de registro:', error);
     res.render('auth/register', {
       title: 'Registro',
       activePage: 'register',
-      error: 'Ocorreu um erro ao registrar'
+      error: 'Ocorreu um erro ao registrar: ' + error.message
     });
   }
 };

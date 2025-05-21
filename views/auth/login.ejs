@@ -10,7 +10,7 @@
   <% } %>
   
   <div class="auth-container">
-    <form action="/login" method="POST" class="auth-form">
+    <form action="/login" method="POST" class="auth-form" id="loginForm">
       <div class="form-group">
         <label for="username">Nome de Usuário:</label>
         <input type="text" id="username" name="username" required>
@@ -31,5 +31,26 @@
     </form>
   </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('loginForm');
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Log form data
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+    console.log('Enviando dados de login:', data);
+    
+    // Submit the form
+    form.submit();
+  });
+});
+</script>
 
 <%- include('../partials/footer') %>

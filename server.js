@@ -23,6 +23,14 @@ app.set("views", path.join(__dirname, "views"));
 // Define a pasta pública com CSS e outros arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 
+// Middleware para debug de formulários
+app.use((req, res, next) => {
+  if (req.method === 'POST') {
+    console.log('POST body:', req.body);
+  }
+  next();
+});
+
 // Rotas
 const routes = require('./routes/index');
 app.use('/', routes);

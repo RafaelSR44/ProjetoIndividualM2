@@ -13,6 +13,7 @@ const authController = require('../controllers/AuthController');
 
 // Middleware para verificar autenticação
 const checkAuth = (req, res, next) => {
+  console.log('Session user:', req.session.user);
   res.locals.user = req.session.user || null;
   next();
 };
