@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-    // Mapeamento dos nomes das árvores para os arquivos de imagem
+  // Mapeamento dos nomes das árvores para os arquivos de imagem
   const treeImageMap = {
     'precisao': 'precision',
     'dominacao': 'domination', 
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateRunePreview();
   }
 
-  // Atualizar slots secundários com layout similar às primárias
+  // Atualizar slots secundários com checkboxes
   function updateSecondarySlotsOptions(treeId) {
     const tree = runeData[treeId];
     if (!tree) return;
@@ -309,12 +309,11 @@ document.addEventListener('DOMContentLoaded', function () {
       slotOptions.forEach(option => {
         const element = document.createElement('div');
         element.className = 'rune-option';
-        // Corrigir o caminho das imagens - usar o nome da árvore em português
         const imagePath = `/assets/runes/${treeId}/${option.id}.png`;
         console.log('Caminho da imagem secundária:', imagePath); // Debug
         
         element.innerHTML = `
-          <input type="radio" id="secondary-${slotKey}-${option.id}" name="secondarySlot" value="${option.id}" class="secondary-slot-radio" data-slot="${slotKey}" data-tree="${treeId}">
+          <input type="checkbox" id="secondary-${slotKey}-${option.id}" name="secondarySlot" value="${option.id}" class="secondary-slot-checkbox" data-slot="${slotKey}" data-tree="${treeId}">
           <label for="secondary-${slotKey}-${option.id}">
             <img src="${imagePath}" alt="${option.name}" onerror="console.log('Erro ao carregar:', this.src); this.src='/assets/runes/placeholder.png'">
             <span>${option.name}</span>
@@ -325,9 +324,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Adicionar lógica para permitir apenas 2 seleções de slots diferentes
-    const secondaryRadios = document.querySelectorAll('.secondary-slot-radio');
-    secondaryRadios.forEach(radio => {
-      radio.addEventListener('change', function() {
+    const secondaryCheckboxes = document.querySelectorAll('.secondary-slot-checkbox');
+    secondaryCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
         handleSecondarySlotSelection();
         updateRunePreview();
       });
@@ -338,52 +337,127 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Limpar seleções secundárias anteriores
   function clearSecondarySelections() {
-    document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
-      radio.checked = false;
-      radio.disabled = false;
-      radio.parentElement.style.opacity = '1';
+    document.querySelectorAll('.secondary-slot-checkbox').forEach(checkbox => {
+      checkbox.checked = false;
+      checkbox.disabled = false;
+      checkbox.parentElement.style.opacity = '1';
+      checkbox.parentElement.style.pointerEvents = 'auto';
     });
   }
 
-  // Gerenciar seleção de runas secundárias (2 de slots diferentes)
+  // Gerenciar seleção de runas secundárias (2 de slots diferentes) - CORRIGIDO
   function handleSecondarySlotSelection() {
-    const selectedRadios = document.querySelectorAll('.secondary-slot-radio:checked');
-    const selectedSlots = Array.from(selectedRadios).map(radio => radio.dataset.slot);
+    const selectedCheckboxes = document.querySelectorAll('.secondary-slot-checkbox:checked');
+    const selectedSlots = Array.from(selectedCheckboxes).map(checkbox => checkbox.dataset.slot);
+    const uniqueSlots = new Set(selectedSlots);
     
     console.log('Seleções secundárias:', selectedSlots); // Debug
+    console.log('Slots únicos:', uniqueSlots); // Debug
     
-    // Se já temos 2 seleções
-    if (selectedSlots.length === 2) {
-      // Desabilitar TODOS os rádios que não estão selecionados
-      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
-        if (!radio.checked) {
-          radio.disabled = true;
-          radio.parentElement.style.opacity = '0.5';
-          radio.parentElement.style.pointerEvents = 'none';
+    // Se já temos 2 seleções de slots únicos
+    if (selectedCheckboxes.length === 2 && uniqueSlots.size === 2) {
+      // Desabilitar todos os checkboxes que não estão selecionados
+      document.querySelectorAll('.secondary-slot-checkbox').forEach(checkbox => {
+        if (!checkbox.checked) {
+          checkbox.disabled = true;
+          checkbox.parentElement.style.opacity = '0.5';
+          checkbox.parentElement.style.pointerEvents = 'none';
         }
       });
-    } else if (selectedSlots.length === 1) {
-      // Se temos 1 seleção, desabilitar apenas o mesmo slot
-      const usedSlot = selectedSlots[0];
-      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
-        if (!radio.checked && radio.dataset.slot === usedSlot) {
-          radio.disabled = true;
-          radio.parentElement.style.opacity = '0.5';
-          radio.parentElement.style.pointerEvents = 'none';
-        } else if (!radio.checked) {
-          radio.disabled = false;
-          radio.parentElement.style.opacity = '1';
-          radio.parentElement.style.pointerEvents = 'auto';
-        }
-      });
+    } else if (selectedCheckboxes.length === 2 && uniqueSlots.size === 1) {
+      // Se temos 2 seleções do mesmo slot, desmarcar a última
+      const lastChecked = selectedCheckboxes[selectedCheckboxes.length - 1];
+      lastChecked.checked = false;
+      showMessage('Você deve selecionar runas de slots diferentes!', 'warning');
+    } else if (selectedCheckboxes.length > 2) {
+      // Se temos mais de 2 seleções, desmarcar a última
+      const lastChecked = selectedCheckboxes[selectedCheckboxes.length - 1];
+      lastChecked.checked = false;
+      showMessage('Você pode selecionar apenas 2 runas secundárias!', 'warning');
     } else {
-      // Se não temos seleções, reabilitar todos
-      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
-        radio.disabled = false;
-        radio.parentElement.style.opacity = '1';
-        radio.parentElement.style.pointerEvents = 'auto';
+      // Se temos menos de 2 seleções ou slots únicos, reabilitar baseado na lógica
+      document.querySelectorAll('.secondary-slot-checkbox').forEach(checkbox => {
+        const currentSelectedSlots = Array.from(document.querySelectorAll('.secondary-slot-checkbox:checked')).map(cb => cb.dataset.slot);
+        const currentUniqueSlots = new Set(currentSelectedSlots);
+        
+        // Se não há seleções ou há apenas 1 seleção
+        if (currentSelectedSlots.length === 0) {
+          // Habilitar todos
+          checkbox.disabled = false;
+          checkbox.parentElement.style.opacity = '1';
+          checkbox.parentElement.style.pointerEvents = 'auto';
+        } else if (currentSelectedSlots.length === 1) {
+          // Se há 1 seleção, desabilitar apenas o mesmo slot
+          if (!checkbox.checked && currentSelectedSlots.includes(checkbox.dataset.slot)) {
+            checkbox.disabled = true;
+            checkbox.parentElement.style.opacity = '0.5';
+            checkbox.parentElement.style.pointerEvents = 'none';
+          } else {
+            checkbox.disabled = false;
+            checkbox.parentElement.style.opacity = '1';
+            checkbox.parentElement.style.pointerEvents = 'auto';
+          }
+        }
       });
     }
+  }
+
+  // Função para mostrar mensagens
+  function showMessage(text, type = 'info') {
+    // Remove mensagem anterior se existir
+    const existingMessage = document.querySelector('.message-notification');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+    
+    const message = document.createElement('div');
+    message.className = `message-notification ${type}`;
+    message.textContent = text;
+    
+    // Estilos da mensagem
+    message.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      z-index: 10000;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // Cores baseadas no tipo
+    switch (type) {
+      case 'success':
+        message.style.backgroundColor = '#28a745';
+        break;
+      case 'error':
+        message.style.backgroundColor = '#dc3545';
+        break;
+      case 'warning':
+        message.style.backgroundColor = '#ffc107';
+        message.style.color = '#212529';
+        break;
+      default:
+        message.style.backgroundColor = '#007bff';
+    }
+    
+    document.body.appendChild(message);
+    
+    // Remover após 3 segundos
+    setTimeout(() => {
+      if (message.parentNode) {
+        message.style.animation = 'slideOutRight 0.3s ease-in';
+        setTimeout(() => {
+          if (message.parentNode) {
+            message.remove();
+          }
+        }, 300);
+      }
+    }, 3000);
   }
 
   // Update rune preview
@@ -395,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const primarySlot3 = document.querySelector('input[name="primarySlot3"]:checked')?.value;
     const secondaryTree = document.querySelector('input[name="secondaryTree"]:checked')?.value;
 
-    const secondarySlots = Array.from(document.querySelectorAll('.secondary-slot-radio:checked')).map(cb => ({
+    const secondarySlots = Array.from(document.querySelectorAll('.secondary-slot-checkbox:checked')).map(cb => ({
       value: cb.value,
       slot: cb.dataset.slot,
       tree: cb.dataset.tree
@@ -414,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
       previewHTML += `
         <div class="preview-tree">
           <div class="preview-tree-header">
-            <img src="/assets/runes/${primaryTree}.png" alt="${runeData[primaryTree].name}" class="preview-tree-icon">
+            <img src="/assets/runes/${treeImageMap[primaryTree]}.png" alt="${runeData[primaryTree].name}" class="preview-tree-icon">
             <h4>${runeData[primaryTree].name} (Primária)</h4>
           </div>
       `;
@@ -454,7 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
       previewHTML += `
         <div class="preview-tree">
           <div class="preview-tree-header">
-            <img src="/assets/runes/${secondaryTree}.png" alt="${runeData[secondaryTree].name}" class="preview-tree-icon">
+            <img src="/assets/runes/${treeImageMap[secondaryTree]}.png" alt="${runeData[secondaryTree].name}" class="preview-tree-icon">
             <h4>${runeData[secondaryTree].name} (Secundária)</h4>
           </div>
       `;
@@ -493,7 +567,6 @@ document.addEventListener('DOMContentLoaded', function () {
           const slotKey = `slot${index + 1}`;
           const shardObj = shardData[slotKey]?.find(s => s.id === shard);
           if (shardObj) {
-            // Corrigir caminho das imagens dos shards
             const shardImagePath = `/assets/shards/${shard}.png`;
             console.log('Caminho da imagem do shard:', shardImagePath); // Debug
             
@@ -519,16 +592,16 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
 
     // Validar seleções de runas secundárias
-    const secondarySlots = document.querySelectorAll('.secondary-slot-radio:checked');
+    const secondarySlots = document.querySelectorAll('.secondary-slot-checkbox:checked');
     if (secondarySlots.length !== 2) {
-      alert('Selecione exatamente 2 runas secundárias de slots diferentes');
+      showMessage('Selecione exatamente 2 runas secundárias de slots diferentes!', 'warning');
       return;
     }
 
     // Verificar se as runas secundárias são de slots diferentes
-    const selectedSlots = Array.from(secondarySlots).map(radio => radio.dataset.slot);
+    const selectedSlots = Array.from(secondarySlots).map(checkbox => checkbox.dataset.slot);
     if (new Set(selectedSlots).size !== 2) {
-      alert('As runas secundárias devem ser de slots diferentes');
+      showMessage('As runas secundárias devem ser de slots diferentes!', 'warning');
       return;
     }
 
@@ -552,6 +625,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log('Dados do formulário:', formData); // Debug
 
+    // Adicionar estado de loading no botão
+    const submitButton = document.querySelector('.save-rune-btn');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Salvando...';
+    submitButton.disabled = true;
+    submitButton.classList.add('loading');
+
     try {
       const response = await fetch('/runes/save', {
         method: 'POST',
@@ -564,18 +644,51 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.ok) {
         const result = await response.json();
         console.log('Runa salva com sucesso:', result);
-        alert('Página de runas salva com sucesso!');
+        showMessage('Página de runas salva com sucesso!', 'success');
         // Redirecionamento
         setTimeout(() => {
           window.location.replace('/runes/my-runes');
-        }, 500);
+        }, 1500);
       } else {
         const error = await response.json();
-        alert(`Erro ao salvar página de runas: ${error.error}`);
+        showMessage(`Erro ao salvar página de runas: ${error.error}`, 'error');
       }
     } catch (error) {
       console.error('Erro ao salvar página de runas:', error);
-      alert('Erro ao salvar página de runas. Tente novamente mais tarde.');
+      showMessage('Erro ao salvar página de runas. Tente novamente mais tarde.', 'error');
+    } finally {
+      // Restaurar botão
+      submitButton.textContent = originalText;
+      submitButton.disabled = false;
+      submitButton.classList.remove('loading');
     }
   }
+
+  // Adicionar animações CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(300px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(300px);
+      }
+    }
+  `;
+  
+  document.head.appendChild(style);
 });

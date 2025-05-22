@@ -8,12 +8,17 @@
       <h3>Nova Página de Runas</h3>
       <form id="runeForm">
         <div class="form-group">
-          <label for="runeName">Nome da Página:</label>
-          <input type="text" id="runeName" name="name" required placeholder="Ex: Ahri Mid">
+          <label for="runeName">✨ Nome da Página de Runas:</label>
+          <input type="text" id="runeName" name="name" required 
+                 placeholder="Ex: Ahri Dominação Mid, Jinx Precisão ADC, Darius Top..."
+                 maxlength="50">
+          <small style="color: #a09b8c; font-size: 0.85rem; margin-top: 0.5rem; display: block;">
+            💡 Dica: Use nomes descritivos como "Campeão + Árvore + Lane" para encontrar facilmente depois!
+          </small>
         </div>
         
         <div class="form-group">
-          <label>Árvore Primária:</label>
+          <label>🌳 Árvore Primária:</label>
           <div class="tree-options">
             <div class="tree-option">
               <input type="radio" id="primary-precision" name="primaryTree" value="precisao" required>
@@ -55,29 +60,29 @@
         
         <!-- Keystone Runes -->
         <div class="form-group" id="keystone-container" style="display: none;">
-          <label>Runa Chave:</label>
+          <label>⚡ Runa Chave (Keystone):</label>
           <div class="rune-options" id="keystone-options"></div>
         </div>
         
         <!-- Primary Rune Slots -->
         <div class="form-group" id="primary-slot1-container" style="display: none;">
-          <label>Linha 1 (Primária):</label>
+          <label>🥇 Linha 1 (Primária):</label>
           <div class="rune-options" id="primary-slot1-options"></div>
         </div>
         
         <div class="form-group" id="primary-slot2-container" style="display: none;">
-          <label>Linha 2 (Primária):</label>
+          <label>🥈 Linha 2 (Primária):</label>
           <div class="rune-options" id="primary-slot2-options"></div>
         </div>
         
         <div class="form-group" id="primary-slot3-container" style="display: none;">
-          <label>Linha 3 (Primária):</label>
+          <label>🥉 Linha 3 (Primária):</label>
           <div class="rune-options" id="primary-slot3-options"></div>
         </div>
         
         <!-- Secondary Tree -->
         <div class="form-group">
-          <label>Árvore Secundária:</label>
+          <label>🌲 Árvore Secundária:</label>
           <div class="tree-options" id="secondary-tree-options">
             <!-- Opções geradas dinamicamente via JavaScript -->
           </div>
@@ -85,17 +90,22 @@
         
         <!-- Secondary Rune Slots -->
         <div class="form-group" id="secondary-slots-container" style="display: none;">
-          <label>Escolha 2 runas secundárias de slots diferentes:</label>
+          <label>🎯 Escolha 2 runas secundárias de linhas diferentes:</label>
+          <div style="background: rgba(200, 169, 100, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+            <p style="margin: 0; font-size: 0.9rem; color: #C8A964; text-align: center;">
+              ⚠️ <strong>Regra importante:</strong> Você deve selecionar exatamente 2 runas de linhas (slots) diferentes!
+            </p>
+          </div>
           <div id="secondary-slots-options"></div>
         </div>
         
-        <!-- Stat Shards Corrigidos -->
+        <!-- Stat Shards -->
         <div class="form-group">
-          <label>Fragmentos Estatísticos:</label>
+          <label>💎 Fragmentos Estatísticos:</label>
           
           <!-- Slot 1 - Offense -->
           <div class="shard-row">
-            <label>Slot 1 (Ofensivo):</label>
+            <label>🗡️ Slot 1 (Ofensivo):</label>
             <div class="shard-options">
               <div class="shard-option">
                 <input type="radio" id="shard1-adaptive" name="shard1" value="adaptive_force" required>
@@ -126,7 +136,7 @@
           
           <!-- Slot 2 - Flex -->
           <div class="shard-row">
-            <label>Slot 2 (Flexível):</label>
+            <label>⚖️ Slot 2 (Flexível):</label>
             <div class="shard-options">
               <div class="shard-option">
                 <input type="radio" id="shard2-adaptive" name="shard2" value="adaptive_force" required>
@@ -137,17 +147,17 @@
                 </label>
               </div>
               <div class="shard-option">
-                <input type="radio" id="shard2-armor" name="shard2" value="armor">
-                <label for="shard2-armor">
+                <input type="radio" id="shard2-movement" name="shard2" value="movement_speed">
+                <label for="shard2-movement">
                   <img src="/assets/shards/movement_speed.png" alt="Velocidade de Movimento" onerror="this.src='/assets/shards/placeholder.png'">
                   <span>Velocidade de Movimento</span>
-                  <small>+2% de Velocidade de Movimento Bonus</small>
+                  <small>+2% de Velocidade de Movimento</small>
                 </label>
               </div>
               <div class="shard-option">
-                <input type="radio" id="shard2-mr" name="shard2" value="magic_resist">
-                <label for="shard2-mr">
-                  <img src="/assets/shards/health_bonus.png" alt="Vida Escalavel" onerror="this.src='/assets/shards/placeholder.png'">
+                <input type="radio" id="shard2-health" name="shard2" value="health_bonus">
+                <label for="shard2-health">
+                  <img src="/assets/shards/health_bonus.png" alt="Vida Escalável" onerror="this.src='/assets/shards/placeholder.png'">
                   <span>Vida Escalável</span>
                   <small>+10-180 Vida (baseado no nível)</small>
                 </label>
@@ -157,7 +167,7 @@
           
           <!-- Slot 3 - Defense -->
           <div class="shard-row">
-            <label>Slot 3 (Defensivo):</label>
+            <label>🛡️ Slot 3 (Defensivo):</label>
             <div class="shard-options">
               <div class="shard-option">
                 <input type="radio" id="shard3-health" name="shard3" value="health" required>
@@ -168,17 +178,17 @@
                 </label>
               </div>
               <div class="shard-option">
-                <input type="radio" id="shard3-armor" name="shard3" value="armor">
-                <label for="shard3-armor">
+                <input type="radio" id="shard3-tenacity" name="shard3" value="tenacity">
+                <label for="shard3-tenacity">
                   <img src="/assets/shards/tenacity.png" alt="Tenacidade" onerror="this.src='/assets/shards/placeholder.png'">
                   <span>Tenacidade</span>
-                  <small>+10% Tenacidade e resistencia a slow</small>
+                  <small>+10% Tenacidade e resistência a slow</small>
                 </label>
               </div>
               <div class="shard-option">
-                <input type="radio" id="shard3-mr" name="shard3" value="magic_resist">
-                <label for="shard3-mr">
-                  <img src="/assets/shards/health_bonus.png" alt="Resistência Mágica" onerror="this.src='/assets/shards/placeholder.png'">
+                <input type="radio" id="shard3-health-scaling" name="shard3" value="health_bonus">
+                <label for="shard3-health-scaling">
+                  <img src="/assets/shards/health_bonus.png" alt="Vida Escalável" onerror="this.src='/assets/shards/placeholder.png'">
                   <span>Vida Escalável</span>
                   <small>+10-180 Vida (baseado no nível)</small>
                 </label>
@@ -188,15 +198,19 @@
         </div>
         
         <div class="form-actions">
-          <button type="submit" class="nav-btn save-rune-btn">Salvar Página de Runas</button>
+          <button type="submit" class="nav-btn save-rune-btn">💾 Salvar Página de Runas</button>
         </div>
       </form>
     </div>
     
     <div class="rune-preview">
-      <h3>Visualização</h3>
+      <h3>👁️ Visualização da Página</h3>
       <div id="rune-preview-content">
-        <p class="empty-state">Selecione as runas para visualizar</p>
+        <p class="empty-state">
+          🎨 Selecione as runas para ver como sua página ficará!
+          <br><br>
+          ✨ Sua página personalizada aparecerá aqui em tempo real
+        </p>
       </div>
     </div>
   </div>
@@ -204,3 +218,12 @@
 
 <script src="/scripts/rune-builder.js"></script>
 <%- include('../partials/footer') %>
+
+<!-- |--------------------------|-----------------------------|
+|Precisão (Arvore Primária)|Dominação (Arvore Secundária)|
+|--------------------------|-----------------------------|
+|   Pressione o Ataque     |-----------------------------|
+|   Triunfo                |        Golpe de Morte       |
+|   Lenda: Tenacidade      |          Caça Voraz         |
+|   Golpe de Gracie        |-----------------------------|
+|--------------------------|-----------------------------| -->
