@@ -1,81 +1,66 @@
-<%- include('../partials/header', { title: 'Registro', activePage: 'register' }) %>
+<%- include('../partials/header', { title: 'Registro' , activePage: 'register' }) %>
 
-<section class="content-section active auth-section">
-  <h2>Criar Conta</h2>
-  
-  <% if (typeof error !== 'undefined') { %>
-    <div class="error-message">
-      <%= error %>
-    </div>
-  <% } %>
-  
-  <div class="auth-container">
-    <form action="/register" method="POST" class="auth-form" id="registerForm">
-      <div class="form-group">
-        <label for="username">Nome de Usuário:</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required minlength="6">
-      </div>
-      
-      <div class="form-group">
-        <label for="confirmPassword">Confirme a Senha:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
-      </div>
-      
-      <div class="form-actions">
-        <button type="submit" class="nav-btn">Registrar</button>
-      </div>
-      
-      <div class="auth-links">
-        <p>Já tem uma conta? <a href="/login">Faça login</a></p>
-      </div>
-    </form>
-  </div>
-</section>
+  <section class="content-section active auth-section">
+    <h2>Criar Conta</h2>
 
-<script>
-document.getElementById('registerForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // impede o envio automático
+    <% if (typeof error !=='undefined' ) { %>
+      <div class="error-message">
+        <%= error %>
+      </div>
+      <% } %>
 
-  const formData = new FormData(this);
-  const nome = formData.get('username');
-  const email = formData.get('email');
+        <div class="auth-container">
+          <form action="/register" method="POST" class="auth-form" id="registerForm">
+            <div class="form-group">
+              <label for="username">Nome de Usuário:</label>
+              <input type="text" id="username" name="username" required>
+            </div>
 
-  console.log('Nome:', nome);
-  console.log('Email:', email);
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+            </div>
 
-  // Você pode enviar isso para um servidor com fetch/AJAX, se quiser
-});
-</script>
+            <div class="form-group">
+              <label for="password">Senha:</label>
+              <input type="password" id="password" name="password" required minlength="6">
+            </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('registerForm');
-  
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Log form data
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
+            <div class="form-group">
+              <label for="confirmPassword">Confirme a Senha:</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="nav-btn">Registrar</button>
+            </div>
+
+            <div class="auth-links">
+              <p>Já tem uma conta? <a href="/login">Faça login</a></p>
+            </div>
+          </form>
+        </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('registerForm');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Log form data
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+        console.log('Enviando dados de registro:', data);
+
+        // Submit the form
+        form.submit();
+      });
     });
-    console.log('Enviando dados de registro:', data);
-    
-    // Submit the form
-    form.submit();
-  });
-});
-</script>
+  </script>
 
-<%- include('../partials/footer') %>
+  <%- include('../partials/footer') %>

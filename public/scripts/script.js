@@ -74,6 +74,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+        const form = document.getElementById('registerForm');
+
+      if (form) {
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const username = formData.get('username');
+          const email = formData.get('email');
+          const password = formData.get('password');
+          const confirmPassword = formData.get('confirmPassword');
+
+          console.log('Form values:');
+          console.log('Username:', username);
+          console.log('Email:', email);
+          console.log('Password:', password);
+          console.log('Confirm Password:', confirmPassword);
+
+          this.submit();
+        });
+      }
+
   function initializeAnimations() {
     const cards = document.querySelectorAll('.card, .spell-card, .damage-card, .champion-class, .lane');
     cards.forEach((card, index) => {

@@ -76,6 +76,8 @@ exports.registerForm = (req, res) => {
 exports.register = async (req, res) => {
   try {
     console.log('Register: Dados recebidos', req.body);
+    await User.create(req.body.username, req.body.email, req.body.password);
+    console.log('Usuário criado com sucesso');
     const { username, email, password, confirmPassword } = req.body;
     
     // Verificar se recebemos os dados do formulário
