@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const secondarySlotsContainer = document.getElementById('secondary-slots-container');
   const runePreviewContent = document.getElementById('rune-preview-content');
 
-  // Runa data - Esta seria uma versão simplificada, você pode expandir com mais dados
+  // Dados das runas atualizados
   const runeData = {
     precisao: {
       name: 'Precisão',
@@ -129,6 +129,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
+  // Dados dos Stat Shards corretos
+  const shardData = {
+    slot1: [ // Offense
+      { id: 'adaptive_force', name: 'Força Adaptativa', desc: '+5.4 AD ou +9 AP' },
+      { id: 'attack_speed', name: 'Velocidade de Ataque', desc: '+10% Velocidade de Ataque' },
+      { id: 'ability_haste', name: 'Aceleração de Habilidade', desc: '+8 Aceleração de Habilidade' }
+    ],
+    slot2: [ // Flex
+      { id: 'adaptive_force', name: 'Força Adaptativa', desc: '+5.4 AD ou +9 AP' },
+      { id: 'movement_speed', name: 'Velocidade de Movimento', desc: '+2% de Velocidade de Movimento Bonus' },
+      { id: 'health_bonus', name: 'Vida Escalável', desc: '+10-180 Vida (baseado no nível)' }
+    ],
+    slot3: [ // Defense
+      { id: 'health', name: 'Vida', desc: '+15-140 Vida (baseado no nível)' },
+      { id: 'tenacity', name: 'Tenacidade', desc: '+10% Tenacidade e resistencia a slow' },
+      { id: 'health_bonus', name: 'Vida Escalável', desc: '+10-180 Vida (baseado no nível)' }
+    ]
+  };
+
   // Event listeners para seleção de árvore primária
   primaryTreeInputs.forEach(input => {
     input.addEventListener('change', handlePrimaryTreeChange);
@@ -160,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
       option.innerHTML = `
         <input type="radio" id="keystone-${keystone.id}" name="primaryKeystone" value="${keystone.id}" required>
         <label for="keystone-${keystone.id}">
-          <img src="/assets/runes/${treeId}/${keystone.id}.png" alt="${keystone.name}">
+          <img src="/assets/runes/${treeId}/${keystone.id}.png" alt="${keystone.name}" onerror="this.src='/assets/runes/placeholder.png'">
           <span>${keystone.name}</span>
         </label>
       `;
@@ -180,16 +199,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const tree = runeData[treeId];
     if (!tree) return;
 
-    updateSlotOptions('primary-slot1-options', tree.slot1, 'primarySlot1');
-    updateSlotOptions('primary-slot2-options', tree.slot2, 'primarySlot2');
-    updateSlotOptions('primary-slot3-options', tree.slot3, 'primarySlot3');
+    updateSlotOptions('primary-slot1-options', tree.slot1, 'primarySlot1', treeId);
+    updateSlotOptions('primary-slot2-options', tree.slot2, 'primarySlot2', treeId);
+    updateSlotOptions('primary-slot3-options', tree.slot3, 'primarySlot3', treeId);
 
     primarySlot1Container.style.display = 'block';
     primarySlot2Container.style.display = 'block';
     primarySlot3Container.style.display = 'block';
   }
 
-  function updateSlotOptions(containerId, options, fieldName) {
+  function updateSlotOptions(containerId, options, fieldName, treeId) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
 
@@ -199,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
       element.innerHTML = `
         <input type="radio" id="${fieldName}-${option.id}" name="${fieldName}" value="${option.id}" required>
         <label for="${fieldName}-${option.id}">
-          <img src="/assets/runes/${option.id}.png" alt="${option.name}">
+          <img src="/assets/runes/${treeId}/${option.id}.png" alt="${option.name}" onerror="this.src='/assets/runes/placeholder.png'">
           <span>${option.name}</span>
         </label>
       `;
@@ -224,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
         option.innerHTML = `
           <input type="radio" id="secondary-${treeId}" name="secondaryTree" value="${treeId}" required>
           <label for="secondary-${treeId}">
-            <img src="/assets/runes/${treeId}.png" alt="${tree.name}">
+            <img src="/assets/runes/${treeId}.png" alt="${tree.name}" onerror="this.src='/assets/runes/placeholder.png'">
             <span>${tree.name}</span>
           </label>
         `;
@@ -245,37 +264,55 @@ document.addEventListener('DOMContentLoaded', function () {
     updateRunePreview();
   }
 
+  // Atualizar slots secundários com layout similar às primárias
   function updateSecondarySlotsOptions(treeId) {
     const tree = runeData[treeId];
     if (!tree) return;
 
-    // Combine all slots from secondary tree
-    const allSlots = [...tree.slot1, ...tree.slot2, ...tree.slot3];
-
     const container = document.getElementById('secondary-slots-options');
     container.innerHTML = '';
 
-    allSlots.forEach(option => {
-      const element = document.createElement('div');
-      element.className = 'rune-option';
-      element.innerHTML = `
-        <input type="checkbox" id="secondary-${option.id}" name="secondarySlots" value="${option.id}" class="secondary-slot-checkbox">
-        <label for="secondary-${option.id}">
-          <img src="/assets/runes/${option.id}.png" alt="${option.name}">
-          <span>${option.name}</span>
-        </label>
+    // Limpar seleções anteriores
+    clearSecondarySelections();
+
+    // Criar containers para cada slot da árvore secundária
+    ['slot1', 'slot2', 'slot3'].forEach((slotKey, slotIndex) => {
+      const slotNumber = slotIndex + 1;
+      const slotContainer = document.createElement('div');
+      slotContainer.className = 'secondary-slot-group';
+      slotContainer.innerHTML = `
+        <h5>Linha ${slotNumber}</h5>
+        <div class="secondary-slot-options" id="secondary-${slotKey}-options"></div>
       `;
-      container.appendChild(element);
+      container.appendChild(slotContainer);
+
+      // Popular as opções de cada slot
+      const slotOptions = tree[slotKey];
+      const slotOptionsContainer = slotContainer.querySelector(`#secondary-${slotKey}-options`);
+      
+      slotOptions.forEach(option => {
+        const element = document.createElement('div');
+        element.className = 'rune-option';
+        // Corrigir o caminho das imagens - usar o nome da árvore em português
+        const imagePath = `/assets/runes/${treeId}/${option.id}.png`;
+        console.log('Caminho da imagem secundária:', imagePath); // Debug
+        
+        element.innerHTML = `
+          <input type="radio" id="secondary-${slotKey}-${option.id}" name="secondarySlot" value="${option.id}" class="secondary-slot-radio" data-slot="${slotKey}" data-tree="${treeId}">
+          <label for="secondary-${slotKey}-${option.id}">
+            <img src="${imagePath}" alt="${option.name}" onerror="console.log('Erro ao carregar:', this.src); this.src='/assets/runes/placeholder.png'">
+            <span>${option.name}</span>
+          </label>
+        `;
+        slotOptionsContainer.appendChild(element);
+      });
     });
 
-    // Limit to 2 secondary slots selection
-    const checkboxes = document.querySelectorAll('.secondary-slot-checkbox');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
-        const checked = document.querySelectorAll('.secondary-slot-checkbox:checked');
-        if (checked.length > 2) {
-          this.checked = false;
-        }
+    // Adicionar lógica para permitir apenas 2 seleções de slots diferentes
+    const secondaryRadios = document.querySelectorAll('.secondary-slot-radio');
+    secondaryRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+        handleSecondarySlotSelection();
         updateRunePreview();
       });
     });
@@ -283,9 +320,58 @@ document.addEventListener('DOMContentLoaded', function () {
     secondarySlotsContainer.style.display = 'block';
   }
 
+  // Limpar seleções secundárias anteriores
+  function clearSecondarySelections() {
+    document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
+      radio.checked = false;
+      radio.disabled = false;
+      radio.parentElement.style.opacity = '1';
+    });
+  }
+
+  // Gerenciar seleção de runas secundárias (2 de slots diferentes)
+  function handleSecondarySlotSelection() {
+    const selectedRadios = document.querySelectorAll('.secondary-slot-radio:checked');
+    const selectedSlots = Array.from(selectedRadios).map(radio => radio.dataset.slot);
+    
+    console.log('Seleções secundárias:', selectedSlots); // Debug
+    
+    // Se já temos 2 seleções
+    if (selectedSlots.length === 2) {
+      // Desabilitar TODOS os rádios que não estão selecionados
+      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
+        if (!radio.checked) {
+          radio.disabled = true;
+          radio.parentElement.style.opacity = '0.5';
+          radio.parentElement.style.pointerEvents = 'none';
+        }
+      });
+    } else if (selectedSlots.length === 1) {
+      // Se temos 1 seleção, desabilitar apenas o mesmo slot
+      const usedSlot = selectedSlots[0];
+      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
+        if (!radio.checked && radio.dataset.slot === usedSlot) {
+          radio.disabled = true;
+          radio.parentElement.style.opacity = '0.5';
+          radio.parentElement.style.pointerEvents = 'none';
+        } else if (!radio.checked) {
+          radio.disabled = false;
+          radio.parentElement.style.opacity = '1';
+          radio.parentElement.style.pointerEvents = 'auto';
+        }
+      });
+    } else {
+      // Se não temos seleções, reabilitar todos
+      document.querySelectorAll('.secondary-slot-radio').forEach(radio => {
+        radio.disabled = false;
+        radio.parentElement.style.opacity = '1';
+        radio.parentElement.style.pointerEvents = 'auto';
+      });
+    }
+  }
+
   // Update rune preview
   function updateRunePreview() {
-    // Get selected values
     const primaryTree = document.querySelector('input[name="primaryTree"]:checked')?.value;
     const keystone = document.querySelector('input[name="primaryKeystone"]:checked')?.value;
     const primarySlot1 = document.querySelector('input[name="primarySlot1"]:checked')?.value;
@@ -293,7 +379,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const primarySlot3 = document.querySelector('input[name="primarySlot3"]:checked')?.value;
     const secondaryTree = document.querySelector('input[name="secondaryTree"]:checked')?.value;
 
-    const secondarySlots = Array.from(document.querySelectorAll('.secondary-slot-checkbox:checked')).map(cb => cb.value);
+    const secondarySlots = Array.from(document.querySelectorAll('.secondary-slot-radio:checked')).map(cb => ({
+      value: cb.value,
+      slot: cb.dataset.slot,
+      tree: cb.dataset.tree
+    }));
 
     if (!primaryTree) {
       runePreviewContent.innerHTML = '<p class="empty-state">Selecione as runas para visualizar</p>';
@@ -304,64 +394,107 @@ document.addEventListener('DOMContentLoaded', function () {
     let previewHTML = '<div class="rune-page-preview">';
 
     // Primary tree
-    previewHTML += `
-      <div class="preview-primary-tree">
-        <div class="preview-tree-header">
-          <img src="/assets/runes/${primaryTree}.png" alt="${runeData[primaryTree].name}" class="preview-tree-icon">
-          <h4>${runeData[primaryTree].name}</h4>
-        </div>
-    `;
-
-    if (keystone) {
-      const keystoneObj = runeData[primaryTree].keystones.find(k => k.id === keystone);
+    if (primaryTree && runeData[primaryTree]) {
       previewHTML += `
-        <div class="preview-keystone">
-          <img src="/assets/runes/${primaryTree}/${keystone}.png" alt="${keystoneObj.name}">
-          <p>${keystoneObj.name}</p>
-        </div>
-      `;
-    }
-
-    // Display primary slots
-    previewHTML += '<div class="preview-primary-slots">';
-
-    // Add selected primary slots...
-    // [similar logic for displaying each selected slot]
-
-    previewHTML += '</div></div>';
-
-    // Secondary tree
-    if (secondaryTree) {
-      previewHTML += `
-        <div class="preview-secondary-tree">
+        <div class="preview-tree">
           <div class="preview-tree-header">
-            <img src="/assets/runes/${secondaryTree}.png" alt="${runeData[secondaryTree].name}" class="preview-tree-icon">
-            <h4>${runeData[secondaryTree].name}</h4>
+            <img src="/assets/runes/${primaryTree}.png" alt="${runeData[primaryTree].name}" class="preview-tree-icon">
+            <h4>${runeData[primaryTree].name} (Primária)</h4>
           </div>
       `;
 
-      // Display secondary slots
-      if (secondarySlots.length > 0) {
-        previewHTML += '<div class="preview-secondary-slots">';
-        // Add selected secondary slots...
-        previewHTML += '</div>';
+      if (keystone) {
+        const keystoneObj = runeData[primaryTree].keystones.find(k => k.id === keystone);
+        if (keystoneObj) {
+          previewHTML += `
+            <div class="preview-rune">
+              <img src="/assets/runes/${primaryTree}/${keystone}.png" alt="${keystoneObj.name}">
+              <span>${keystoneObj.name}</span>
+            </div>
+          `;
+        }
       }
+
+      [primarySlot1, primarySlot2, primarySlot3].forEach((slot, index) => {
+        if (slot) {
+          const slotKey = `slot${index + 1}`;
+          const slotObj = runeData[primaryTree][slotKey]?.find(r => r.id === slot);
+          if (slotObj) {
+            previewHTML += `
+              <div class="preview-rune">
+                <img src="/assets/runes/${primaryTree}/${slot}.png" alt="${slotObj.name}">
+                <span>${slotObj.name}</span>
+              </div>
+            `;
+          }
+        }
+      });
+
+      previewHTML += '</div>';
+    }
+
+    // Secondary tree
+    if (secondaryTree && runeData[secondaryTree]) {
+      previewHTML += `
+        <div class="preview-tree">
+          <div class="preview-tree-header">
+            <img src="/assets/runes/${secondaryTree}.png" alt="${runeData[secondaryTree].name}" class="preview-tree-icon">
+            <h4>${runeData[secondaryTree].name} (Secundária)</h4>
+          </div>
+      `;
+
+      secondarySlots.forEach(({value, slot, tree}) => {
+        const slotObj = runeData[tree][slot]?.find(r => r.id === value);
+        if (slotObj) {
+          const imagePathSecondary = `/assets/runes/${tree}/${value}.png`;
+          console.log('Preview - Caminho da imagem secundária:', imagePathSecondary); // Debug
+          
+          previewHTML += `
+            <div class="preview-rune">
+              <img src="${imagePathSecondary}" alt="${slotObj.name}" onerror="console.log('Erro no preview secundário:', this.src); this.src='/assets/runes/placeholder.png'">
+              <span>${slotObj.name}</span>
+            </div>
+          `;
+        }
+      });
 
       previewHTML += '</div>';
     }
 
     // Stat shards
-    previewHTML += `
-      <div class="preview-shards">
-        <h4>Fragmentos Estatísticos</h4>
-        <div class="preview-shard-list">
-          <!-- Display selected shards -->
-        </div>
-      </div>
-    `;
+    const shard1 = document.querySelector('input[name="shard1"]:checked')?.value;
+    const shard2 = document.querySelector('input[name="shard2"]:checked')?.value;
+    const shard3 = document.querySelector('input[name="shard3"]:checked')?.value;
+
+    if (shard1 || shard2 || shard3) {
+      previewHTML += `
+        <div class="preview-shards">
+          <h4>Fragmentos Estatísticos</h4>
+      `;
+
+      [shard1, shard2, shard3].forEach((shard, index) => {
+        if (shard) {
+          const slotKey = `slot${index + 1}`;
+          const shardObj = shardData[slotKey]?.find(s => s.id === shard);
+          if (shardObj) {
+            // Corrigir caminho das imagens dos shards
+            const shardImagePath = `/assets/shards/${shard}.png`;
+            console.log('Caminho da imagem do shard:', shardImagePath); // Debug
+            
+            previewHTML += `
+              <div class="preview-shard">
+                <img src="${shardImagePath}" alt="${shardObj.name}" onerror="console.log('Erro ao carregar shard:', this.src); this.src='/assets/shards/placeholder.png'">
+                <span>${shardObj.name}</span>
+              </div>
+            `;
+          }
+        }
+      });
+
+      previewHTML += '</div>';
+    }
 
     previewHTML += '</div>';
-
     runePreviewContent.innerHTML = previewHTML;
   }
 
@@ -369,14 +502,23 @@ document.addEventListener('DOMContentLoaded', function () {
   async function handleFormSubmit(e) {
     e.preventDefault();
 
-    // Validate secondary slots selection
-    const secondarySlots = document.querySelectorAll('.secondary-slot-checkbox:checked');
+    // Validar seleções de runas secundárias
+    const secondarySlots = document.querySelectorAll('.secondary-slot-radio:checked');
     if (secondarySlots.length !== 2) {
-      alert('Selecione exatamente 2 runas secundárias');
+      alert('Selecione exatamente 2 runas secundárias de slots diferentes');
       return;
     }
 
-    // Prepare form data
+    // Verificar se as runas secundárias são de slots diferentes
+    const selectedSlots = Array.from(secondarySlots).map(radio => radio.dataset.slot);
+    if (new Set(selectedSlots).size !== 2) {
+      alert('As runas secundárias devem ser de slots diferentes');
+      return;
+    }
+
+    // Preparar dados do formulário
+    const secondarySelections = Array.from(secondarySlots);
+    
     const formData = {
       name: document.getElementById('runeName').value,
       primaryTree: document.querySelector('input[name="primaryTree"]:checked').value,
@@ -385,12 +527,14 @@ document.addEventListener('DOMContentLoaded', function () {
       primarySlot2: document.querySelector('input[name="primarySlot2"]:checked').value,
       primarySlot3: document.querySelector('input[name="primarySlot3"]:checked').value,
       secondaryTree: document.querySelector('input[name="secondaryTree"]:checked').value,
-      secondarySlot1: secondarySlots[0].value,
-      secondarySlot2: secondarySlots[1].value,
+      secondarySlot1: secondarySelections[0].value,
+      secondarySlot2: secondarySelections[1].value,
       shard1: document.querySelector('input[name="shard1"]:checked').value,
       shard2: document.querySelector('input[name="shard2"]:checked').value,
       shard3: document.querySelector('input[name="shard3"]:checked').value,
     };
+
+    console.log('Dados do formulário:', formData); // Debug
 
     try {
       const response = await fetch('/runes/save', {
@@ -405,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const result = await response.json();
         console.log('Runa salva com sucesso:', result);
         alert('Página de runas salva com sucesso!');
-        // Forçar redirecionamento com timeout
+        // Redirecionamento
         setTimeout(() => {
           window.location.replace('/runes/my-runes');
         }, 500);
