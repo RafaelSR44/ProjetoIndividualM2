@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
       ],
       slot2: [
         { id: 'sixth_sense', name: 'Sexto Sentido' },
-        { id: 'zombie_ward', name: 'Sentinela Profunda' },
-        { id: 'eyeball_collection', name: 'Lembrança Aterrorizante' }
+        { id: 'grisly_mementos', name: 'Lembrança Aterrorizante' },
+        { id: 'deep_ward', name: 'Sentinela Profunda' }
       ],
       slot3: [
         { id: 'treasure_hunter', name: 'Caçador de Tesouros' },
@@ -114,17 +114,17 @@ document.addEventListener('DOMContentLoaded', function () {
       slot1: [
         { id: 'hextech_flashtraption', name: 'Flashtração Hextec' },
         { id: 'magical_footwear', name: 'Calçados Mágicos' },
-        { id: 'perfect_timing', name: 'Reembolso' }
+        { id: 'cash_back', name: 'Reembolso' }
       ],
       slot2: [
-        { id: 'futures_market', name: 'Tônico Triplo' },
+        { id: 'triple_tonic', name: 'Tônico Triplo' },
         { id: 'time_warp_tonic', name: 'Tônico de Distorção no Tempo' },
         { id: 'biscuit_delivery', name: 'Entrega de Biscoitos' }
       ],
       slot3: [
         { id: 'cosmic_insight', name: 'Perspicácia Cósmica' },
         { id: 'approach_velocity', name: 'Velocidade de Aproximação' },
-        { id: 'minion_dematerializer', name: 'Quebra-Galho' }
+        { id: 'jack_of_all_trades', name: 'Quebra-Galho' }
       ]
     }
   };
