@@ -231,6 +231,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+    // Mapeamento dos nomes das árvores para os arquivos de imagem
+  const treeImageMap = {
+    'precisao': 'precision',
+    'dominacao': 'domination', 
+    'feiticaria': 'sorcery',
+    'determinacao': 'resolve',
+    'inspiracao': 'inspiration'
+  };
+
   // Atualizar opções de árvore secundária (excluindo a primária)
   function updateSecondaryTreeOptions(primaryTreeId) {
     secondaryTreeOptions.innerHTML = '';
@@ -240,10 +249,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const tree = runeData[treeId];
         const option = document.createElement('div');
         option.className = 'tree-option';
+        
+        // Usar o mapeamento correto para a imagem
+        const imageFileName = treeImageMap[treeId] || treeId;
+        const imagePath = `/assets/runes/${imageFileName}.png`;
+        
+        console.log(`Árvore secundária: ${treeId} -> imagem: ${imagePath}`); // Debug
+        
         option.innerHTML = `
           <input type="radio" id="secondary-${treeId}" name="secondaryTree" value="${treeId}" required>
           <label for="secondary-${treeId}">
-            <img src="/assets/runes/${treeId}.png" alt="${tree.name}" onerror="this.src='/assets/runes/placeholder.png'">
+            <img src="${imagePath}" alt="${tree.name}" onerror="console.log('Erro ao carregar árvore:', this.src); this.src='/assets/runes/placeholder.png'">
             <span>${tree.name}</span>
           </label>
         `;
