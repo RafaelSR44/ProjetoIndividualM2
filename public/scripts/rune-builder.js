@@ -403,8 +403,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (response.ok) {
         const result = await response.json();
+        console.log('Runa salva com sucesso:', result);
         alert('Página de runas salva com sucesso!');
-        window.location.href = '/runes/my-runes';
+        // Forçar redirecionamento com timeout
+        setTimeout(() => {
+          window.location.replace('/runes/my-runes');
+        }, 500);
       } else {
         const error = await response.json();
         alert(`Erro ao salvar página de runas: ${error.error}`);
