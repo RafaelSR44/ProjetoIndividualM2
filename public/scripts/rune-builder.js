@@ -20,13 +20,13 @@ document.addEventListener('DOMContentLoaded', function () {
         { id: 'conqueror', name: 'Conquistador' }
       ],
       slot1: [
-        { id: 'overheal', name: 'Absorsão Vital' },
+        { id: 'absorb_life', name: 'Absorsão Vital' },
         { id: 'triumph', name: 'Triunfo' },
         { id: 'presence_of_mind', name: 'Presença de Espírito' }
       ],
       slot2: [
         { id: 'legend_alacrity', name: 'Lenda: Espontaneidade' },
-        { id: 'legend_tenacity', name: 'Lenda: Aceleração' },
+        { id: 'legend_haste', name: 'Lenda: Aceleração' },
         { id: 'legend_bloodline', name: 'Lenda: Linhagem' }
       ],
       slot3: [
@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
         { id: 'sudden_impact', name: 'Impacto Repentino' }
       ],
       slot2: [
+        { id: 'sixth_sense', name: 'Sexto Sentido' },
         { id: 'zombie_ward', name: 'Sentinela Profunda' },
-        { id: 'ghost_poro', name: 'Sexto Sentido' },
         { id: 'eyeball_collection', name: 'Lembrança Aterrorizante' }
       ],
       slot3: [
@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function () {
         { id: 'perfect_timing', name: 'Reembolso' }
       ],
       slot2: [
-        { id: 'time_warp_tonic', name: 'Tônico Triplo' },
-        { id: 'futures_market', name: 'Tônico de Distorção no Tempo' },
+        { id: 'futures_market', name: 'Tônico Triplo' },
+        { id: 'time_warp_tonic', name: 'Tônico de Distorção no Tempo' },
         { id: 'biscuit_delivery', name: 'Entrega de Biscoitos' }
       ],
       slot3: [
