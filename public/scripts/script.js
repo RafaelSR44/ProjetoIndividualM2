@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeMinionsGold();
   }
 
-    // Initialize specific features when the elements exist
+  // Initialize specific features when the elements exist
   if (document.querySelector('.rune-header')) {
     console.log('Runas encontradas na página, inicializando...');
     initializeCollapsibleRunes();
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     console.log('Nenhuma runa encontrada na página');
   }
-  
+
   if (document.querySelector('.champion-class.clickable')) {
     console.log('Classes de campeões encontradas na página, inicializando...');
     initializeChampionClasses();

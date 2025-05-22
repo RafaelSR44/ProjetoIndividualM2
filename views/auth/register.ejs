@@ -43,6 +43,21 @@
 </section>
 
 <script>
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // impede o envio automático
+
+  const formData = new FormData(this);
+  const nome = formData.get('username');
+  const email = formData.get('email');
+
+  console.log('Nome:', nome);
+  console.log('Email:', email);
+
+  // Você pode enviar isso para um servidor com fetch/AJAX, se quiser
+});
+</script>
+
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('registerForm');
   
