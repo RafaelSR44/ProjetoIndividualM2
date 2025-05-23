@@ -1,8 +1,6 @@
 # Web Application Document - Projeto Individual - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final._**
-
-## ReservaAI
+## League of Legends Guide
 
 #### Rafael Santana Rodrigues
 
@@ -18,141 +16,220 @@
 
 ## <a name="c1"></a>1. Introdução (Semana 01)
 
-O ReservaAI é um sistema para gestão de reservas de salas em ambientes corporativos, educacionais ou coworkings. Ele permite visualizar a disponibilidade de salas em tempo real, realizar reservas de forma prática.
+O **League of Legends Guide** é uma aplicação web educativa desenvolvida para ajudar novos jogadores a compreender os fundamentos do jogo League of Legends. O sistema oferece guias interativos sobre runas, feitiços, classes de campeões, lanes do mapa e mecânicas básicas.
 
-A aplicação oferece autenticação para diferentes perfis de usuários, como administradores e colaboradores. Administradores podem gerenciar salas e horários, enquanto colaboradores podem buscar salas por critérios específicos e efetuar reservas.
+A aplicação possui funcionalidades de autenticação que permitem aos usuários criar e salvar páginas de runas personalizadas, além de acessar conteúdo educativo estruturado sobre diferentes aspectos do jogo.
+
+**Principais Funcionalidades:**
+- Sistema de autenticação (login/registro)
+- Construtor interativo de páginas de runas
+- Guias educativos sobre mecânicas do jogo
+- Interface responsiva e intuitiva
+- Armazenamento de configurações personalizadas
 
 ---
 
 ## <a name="c2"></a>2. Visão Geral da Aplicação Web
 
-### 2.1. Personas (Semana 01 - opcional)
+### 2.1. Personas (Semana 01)
 
-*Posicione aqui sua(s) Persona(s) em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+**Persona Principal: João, o Novo Invocador**
+- **Idade:** 16-25 anos
+- **Perfil:** Estudante/jovem profissional interessado em jogos competitivos
+- **Experiência:** Iniciante em League of Legends
+- **Objetivos:** Aprender fundamentos do jogo, criar builds de runas eficazes
+- **Dores:** Informações espalhadas, interfaces complexas, falta de orientação estruturada
 
-### 2.2. User Stories (Semana 01 - opcional)
+### 2.2. User Stories (Semana 01)
 
-*Posicione aqui a lista de User Stories levantadas para o projeto. Siga o template de User Stories e utilize a referência USXX para numeração (US01, US02, US03, ...). Indique todas as User Stories mapeadas, mesmo aquelas que não forem implementadas ao longo do projeto. Não se esqueça de explicar o INVEST de 1 User Storie prioritária.*
+**US01 - Aprender sobre Runas**
+Como um novo jogador, eu quero entender o sistema de runas para melhorar meu desempenho no jogo.
+
+**US02 - Criar Páginas de Runas**
+Como usuário autenticado, eu quero criar e salvar páginas de runas personalizadas para diferentes campeões.
+
+**US03 - Consultar Guias**
+Como iniciante, eu quero acessar guias sobre feitiços, classes e mecânicas para aprender progressivamente.
+
+**US04 - Gerenciar Configurações**
+Como usuário registrado, eu quero visualizar e gerenciar minhas páginas de runas salvas.
 
 ---
 
 ## <a name="c3"></a>3. Projeto da Aplicação Web
 
-### 3.1. Modelagem do banco de dados  (Semana 3)
+### 3.1. Modelagem do banco de dados (Semana 3)
 
 #### Modelo Relacional do Banco de dados 
+
 <img src="assets/EsquemaBaseDeDados.png">
 
 <hr>
 
-#### Modelo Fisico do Banco de Dados
+#### Modelo Físico do Banco de Dados
+
 ```sql
-CREATE TABLE usuarios (
-    id_usuario SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
+-- Tabela de usuários para autenticação
+CREATE TABLE usuarios_lol (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    telefone VARCHAR(20),
-    departamento VARCHAR(50),
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ativo BOOLEAN DEFAULT TRUE
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela de salas disponíveis para reserva
-CREATE TABLE salas (
-    id_sala SERIAL PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    capacidade INTEGER NOT NULL,
-    localizacao VARCHAR(100),
-    descricao TEXT,
-    possui_projetor BOOLEAN DEFAULT FALSE,
-    possui_videoconferencia BOOLEAN DEFAULT FALSE,
-    ativa BOOLEAN DEFAULT TRUE
+-- Tabela de páginas de runas salvas
+CREATE TABLE rune_pages (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES usuarios_lol(id) ON DELETE CASCADE,
+    name VARCHAR(50) NOT NULL,
+    primary_tree VARCHAR(20) NOT NULL,
+    primary_keystone VARCHAR(50) NOT NULL,
+    primary_slot1 VARCHAR(50) NOT NULL,
+    primary_slot2 VARCHAR(50) NOT NULL,
+    primary_slot3 VARCHAR(50) NOT NULL,
+    secondary_tree VARCHAR(20) NOT NULL,
+    secondary_slot1 VARCHAR(50) NOT NULL,
+    secondary_slot2 VARCHAR(50) NOT NULL,
+    shard1 VARCHAR(20) NOT NULL,
+    shard2 VARCHAR(20) NOT NULL,
+    shard3 VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Tabela de status possíveis para uma reserva
-CREATE TABLE status_reserva (
-    id_status SERIAL PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
-    descricao TEXT
-);
-
--- Tabela de reservas de salas
-CREATE TABLE reservas (
-    id_reserva SERIAL PRIMARY KEY,
-    id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
-    id_sala INTEGER NOT NULL REFERENCES salas(id_sala),
-    titulo VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    data_inicio TIMESTAMP NOT NULL,
-    data_fim TIMESTAMP NOT NULL,
-    data_solicitacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    id_status INTEGER NOT NULL REFERENCES status_reserva(id_status),
-    observacoes TEXT,
-    CONSTRAINT check_datas CHECK (data_fim > data_inicio)
-);
-
--- Tabela para registrar o histórico de alterações nas reservas
-CREATE TABLE historico_reservas (
-    id_historico SERIAL PRIMARY KEY,
-    id_reserva INTEGER NOT NULL REFERENCES reservas(id_reserva),
-    id_usuario INTEGER NOT NULL REFERENCES usuarios(id_usuario),
-    data_alteracao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status_anterior INTEGER REFERENCES status_reserva(id_status),
-    status_novo INTEGER REFERENCES status_reserva(id_status),
-    observacao TEXT
-);
-
--- Inserção de dados iniciais (valores padrão)
-INSERT INTO status_reserva (nome, descricao) VALUES 
-('Pendente', 'Reserva solicitada, aguardando confirmação'),
-('Confirmada', 'Reserva confirmada e agendada'),
-('Cancelada', 'Reserva cancelada pelo usuário'),
-('Recusada', 'Reserva recusada pelo administrador'),
-('Concluída', 'Reserva realizada e concluída');
-
--- Índices para melhorar a performance de consultas frequentes
-CREATE INDEX idx_reservas_data ON reservas(data_inicio, data_fim);
-CREATE INDEX idx_reservas_sala ON reservas(id_sala);
-CREATE INDEX idx_reservas_usuario ON reservas(id_usuario);
-CREATE INDEX idx_reservas_status ON reservas(id_status);
 ```
 
-
 ### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+
+**Models Implementados:**
+
+1. **User.js**
+   - `findByUsername(username)` - Busca usuário por nome
+   - `findByEmail(email)` - Busca usuário por email
+   - `create(username, email, password)` - Cria novo usuário
+   - `verifyPassword(user, password)` - Verifica senha com bcrypt
+
+2. **RunePage.js**
+   - `findAllByUser(userId)` - Lista páginas de runas do usuário
+   - `create(runePage)` - Cria nova página de runas
+   - `delete(id, userId)` - Remove página de runas
 
 ### 3.2. Arquitetura (Semana 5)
 
-*Posicione aqui o diagrama de arquitetura da sua solução de aplicação web. Atualize sempre que necessário.*
-
-**Instruções para criação do diagrama de arquitetura**  
-- **Model**: A camada que lida com a lógica de negócios e interage com o banco de dados.
-- **View**: A camada responsável pela interface de usuário.
-- **Controller**: A camada que recebe as requisições, processa as ações e atualiza o modelo e a visualização.
-  
-*Adicione as setas e explicações sobre como os dados fluem entre o Model, Controller e View.*
-
-### 3.3. Wireframes (Semana 03 - opcional)
-
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização).*
-
-### 3.4. Guia de estilos (Semana 05 - opcional)
-
-*Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução.*
 
 
-### 3.5. Protótipo de alta fidelidade (Semana 05 - opcional)
+A aplicação segue o padrão **MVC (Model-View-Controller)** com Express.js:
 
-*Posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização).*
+**Fluxo de Dados:**
+1. **User Request** → Routes (`/routes/index.js`)
+2. **Routes** → Controller (lógica de negócios)
+3. **Controller** → Model (operações de dados)
+4. **Model** → Database (PostgreSQL/Supabase)
+5. **Database** → Model → Controller → View (EJS)
+6. **View** → User Response (HTML renderizado)
+
+**Componentes Principais:**
+
+- **Controllers:**
+  - `AuthController` - Autenticação e registro
+  - `RunesController` - Sistema de runas e construtor
+  - `HomeController` - Página inicial
+  - `ChampionsController`, `SpellsController`, etc.
+
+- **Views (EJS):**
+  - `pages/` - Páginas principais
+  - `auth/` - Login e registro
+  - `partials/` - Componentes reutilizáveis
+
+- **Models:**
+  - Abstração da camada de dados
+  - Validações e operações CRUD
+  - Comunicação com PostgreSQL
+
+- **Static Assets:**
+  - `/public/stylesheet/` - CSS responsivo
+  - `/public/scripts/` - JavaScript interativo
+  - `/public/assets/` - Imagens e recursos
+
+### 3.3. Wireframes (Semana 03)
+
+Os wireframes foram desenvolvidos priorizando:
+- **Navegação intuitiva** entre seções
+- **Interface responsiva** para diferentes dispositivos
+- **Feedback visual** para interações do usuário
+- **Hierarquia clara** de informações
+
+### 3.4. Guia de estilos (Semana 05)
+
+**Paleta de Cores:**
+- Primária: `#0F1B3C` (Azul escuro - background)
+- Secundária: `#C8A964` (Dourado - acentos)
+- Texto: `#CDBE91` (Bege claro)
+- Cards: `#1e2d50` (Azul médio)
+
+**Tipografia:**
+- Font-family: Arial, sans-serif
+- Hierarquia clara com tamanhos de 0.8rem a 3rem
+
+**Componentes:**
+- Cards com hover effects e transformações suaves
+- Botões com gradientes e estados visuais
+- Formulários com validação em tempo real
+
+### 3.5. Protótipo de alta fidelidade (Semana 05)
+
+O protótipo implementa:
+- **Design system** consistente inspirado no universo de LoL
+- **Animações** e micro-interações
+- **Responsividade** completa
+- **Acessibilidade** com contrast ratio adequado
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+**Rotas Principais:**
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/` | Página inicial |
+| GET | `/runes` | Sistema de runas |
+| GET | `/runes/builder` | Construtor de runas (auth) |
+| GET | `/runes/my-runes` | Páginas salvas (auth) |
+| POST | `/runes/save` | Salvar página de runas |
+| DELETE | `/runes/:id` | Deletar página de runas |
+| GET | `/login` | Formulário de login |
+| POST | `/login` | Processar login |
+| GET | `/register` | Formulário de registro |
+| POST | `/register` | Processar registro |
+| GET | `/logout` | Logout |
+
+**Middleware:**
+- `checkAuth` - Verificação de autenticação
+- `express.session` - Gerenciamento de sessões
+- `express.static` - Arquivos estáticos
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-*Descreva e ilustre aqui o desenvolvimento do frontend do sistema web, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+<!-- **Frontend Desenvolvido:**
+
+1. **Sistema de Navegação**
+   - Menu responsivo com estados ativos
+   - Breadcrumbs contextuais
+   - Navegação por teclado (Alt + setas)
+
+2. **Páginas Educativas**
+   - Conteúdo interativo com JavaScript
+   - Cards expansíveis e tooltips
+   - Animações CSS suaves
+
+3. **Sistema de Runas**
+   - Construtor visual interativo
+   - Preview em tempo real
+   - Validação de seleções
+
+4. **Autenticação**
+   - Formulários com validação
+   - Feedback visual de estados
+   - Proteção de rotas sensíveis -->
 
 ---
 
@@ -160,19 +237,74 @@ CREATE INDEX idx_reservas_status ON reservas(id_status);
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
 
-*VIDEO: Insira o link do vídeo demonstrativo nesta seção*
-*Descreva e ilustre aqui o desenvolvimento do sistema web completo, explicando brevemente o que foi entregue em termos de código e sistema. Utilize prints de tela para ilustrar.*
+<!-- **Funcionalidades Implementadas:**
+
+✅ **Sistema de Autenticação**
+- Registro e login com validação
+- Hash de senhas com bcrypt
+- Sessões persistentes
+- Proteção de rotas
+
+✅ **Construtor de Páginas de Runas**
+- Interface visual interativa
+- Seleção de árvores primárias e secundárias
+- Validação de regras do jogo
+- Preview em tempo real
+
+✅ **Gerenciamento de Runas**
+- Listagem de páginas salvas
+- Visualização detalhada
+- Exclusão com confirmação
+- Timestamps formatados
+
+✅ **Conteúdo Educativo**
+- 7 seções temáticas
+- Conteúdo interativo com JavaScript
+- Animações e efeitos visuais
+- Design responsivo
+
+✅ **Banco de Dados**
+- PostgreSQL hospedado no Supabase
+- Migrations e scripts de setup
+- Operações CRUD completas -->
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
 
-*Indique pontos fortes e pontos a melhorar de maneira geral.*
-*Relacione também quaisquer outras ideias que você tenha para melhorias futuras.*
+<!-- **Pontos Fortes:**
+- ✅ Arquitetura MVC bem estruturada
+- ✅ Interface intuitiva e responsiva
+- ✅ Sistema de autenticação robusto
+- ✅ Validações tanto frontend quanto backend
+- ✅ Código bem documentado e organizado
 
+**Pontos a Melhorar:**
+- 🔄 Implementar testes unitários (Jest configurado)
+- 🔄 Adicionar cache de sessões (Redis)
+- 🔄 Implementar rate limiting
+- 🔄 Melhorar SEO e meta tags
+- 🔄 Adicionar logs estruturados
 
+**Ideias para Melhorias Futuras:**
+- 🚀 Sistema de favoritos para builds
+- 🚀 Compartilhamento de páginas de runas
+- 🚀 Integração com API oficial da Riot
+- 🚀 Sistema de comentários e avaliações
+- 🚀 Dashboard administrativo
+- 🚀 Notificações push para atualizações
+- 🚀 Sistema de conquistas/badges
+- 🚀 Modo offline com service workers -->
+
+---
 
 ## <a name="c5"></a>5. Referências
 
-_Incluir as principais referências de seu projeto, para que o leitor possa consultar caso ele se interessar em aprofundar._<br>
+1. **Riot Games Developer Portal** - https://developer.riotgames.com/
+2. **League of Legends Official Site** - https://www.leagueoflegends.com/
+3. **Express.js Documentation** - https://expressjs.com/
+4. **EJS Templating** - https://ejs.co/
+5. **PostgreSQL Documentation** - https://www.postgresql.org/docs/
+6. **Supabase Documentation** - https://supabase.com/docs
+7. **MDN Web Docs** - https://developer.mozilla.org/
+8. **Node.js Best Practices** - https://github.com/goldbergyoni/nodebestpractices
 
----
 ---
