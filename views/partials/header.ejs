@@ -10,6 +10,18 @@
   <link rel="stylesheet" href="/stylesheet/style.css">
   <link rel="shortcut icon" href="assets/lol_icon.ico" type="image/x-icon">
 
+  <!-- Google AdSense Script -->
+  <% if (process.env.ENABLE_ADS === 'true') { %>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= process.env.GOOGLE_ADSENSE_CLIENT %>" crossorigin="anonymous"></script>
+    
+    <!-- Auto Ads (opcional - ativa anúncios automáticos) -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "<%= process.env.GOOGLE_ADSENSE_CLIENT %>",
+        enable_page_level_ads: true
+      });
+    </script>
+  <% } %>
 </head>
 
 <body>
@@ -21,6 +33,9 @@
       </div>
       <% } %>
   </header>
+
+  <!-- Banner Superior -->
+  <%- include('adsense', { adPosition: 'top', adSlot: '1234567890' }) %>
 
   <nav>
     <a href="/" class="nav-link <%= locals.activePage === 'overview' ? 'active' : '' %>">Visão Geral</a>
@@ -41,4 +56,10 @@
         <% } %>
   </nav>
 
-  <main>
+  <!-- Estrutura com sidebar para anúncios (apenas em páginas de conteúdo) -->
+  <% if (locals.activePage !== 'login' && locals.activePage !== 'register') { %>
+    <div class="content-with-ads">
+      <main class="main-content">
+  <% } else { %>
+    <main>
+  <% } %>

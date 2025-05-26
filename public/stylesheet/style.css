@@ -3606,3 +3606,231 @@ footer {
   max-height: 2000px; /* Valor alto o suficiente para acomodar todo o conteúdo */
   opacity: 1;
 }
+
+/* =========================== GOOGLE ADSENSE STYLES =========================== */
+
+/* Container geral para anúncios */
+.ad-container {
+  margin: 1.5rem 0;
+  text-align: center;
+  background: rgba(30, 45, 80, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid rgba(200, 169, 100, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Label "Publicidade" */
+.ad-label {
+  font-size: 0.75rem;
+  color: #a09b8c;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Banner superior */
+.ad-top {
+  margin: 1rem auto 2rem auto;
+  max-width: 728px;
+  min-height: 90px;
+}
+
+/* Banner lateral */
+.ad-sidebar {
+  width: 100%;
+  max-width: 320px;
+  min-height: 250px;
+  margin: 1rem 0;
+  position: sticky;
+  top: 20px;
+}
+
+/* Banner inferior */
+.ad-bottom {
+  margin: 2rem auto 1rem auto;
+  max-width: 728px;
+  min-height: 90px;
+}
+
+/* Banner no meio do conteúdo */
+.ad-content {
+  margin: 2rem auto;
+  max-width: 600px;
+  min-height: 280px;
+  background: linear-gradient(145deg, rgba(30, 45, 80, 0.1), rgba(70, 55, 20, 0.1));
+  border: 2px solid rgba(200, 169, 100, 0.3);
+}
+
+/* Banner mobile */
+.ad-mobile {
+  display: none;
+  margin: 1rem auto;
+  max-width: 320px;
+  min-height: 50px;
+}
+
+/* Layout com sidebar para anúncios */
+.content-with-ads {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main-content {
+  min-width: 0; /* Previne overflow */
+}
+
+.ads-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Efeitos hover nos containers de anúncios */
+.ad-container:hover {
+  background: rgba(30, 45, 80, 0.15);
+  border-color: rgba(200, 169, 100, 0.4);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Estilos para placeholders de teste */
+.ad-placeholder {
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Animação sutil para carregamento */
+.ad-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 100, 0.1), transparent);
+  animation: adShimmer 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes adShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .content-with-ads {
+    grid-template-columns: 1fr;
+  }
+  
+  .ads-sidebar {
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .ad-sidebar {
+    position: static;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-container {
+    margin: 1rem 0;
+    padding: 0.8rem;
+  }
+  
+  .ad-top,
+  .ad-bottom {
+    max-width: 100%;
+    min-height: 50px;
+  }
+  
+  .ad-content {
+    min-height: 200px;
+  }
+  
+  /* Mostrar banner mobile em telas pequenas */
+  .ad-mobile {
+    display: block;
+  }
+  
+  /* Esconder banners grandes em mobile */
+  .ad-top,
+  .ad-bottom {
+    display: none;
+  }
+  
+  .ads-sidebar {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-container {
+    margin: 0.8rem 0;
+    padding: 0.5rem;
+  }
+  
+  .ad-content {
+    min-height: 150px;
+  }
+}
+
+/* Integração com tema do site */
+.ad-container {
+  background: linear-gradient(145deg, rgba(30, 45, 80, 0.1), rgba(70, 55, 20, 0.05));
+  border-color: rgba(200, 169, 100, 0.2);
+}
+
+.ad-label {
+  color: rgba(200, 169, 100, 0.8);
+}
+
+/* Estados de loading */
+.ad-container.loading {
+  min-height: 100px;
+  background: linear-gradient(90deg, rgba(30, 45, 80, 0.1), rgba(200, 169, 100, 0.1), rgba(30, 45, 80, 0.1));
+  background-size: 200% 100%;
+  animation: adLoading 1.5s ease-in-out infinite;
+}
+
+@keyframes adLoading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  .ad-container::before,
+  .ad-container.loading {
+    animation: none;
+  }
+  
+  .ad-container:hover {
+    transform: none;
+  }
+}
+
+/* Print styles - esconder anúncios ao imprimir */
+@media print {
+  .ad-container,
+  .ad-placeholder,
+  .ads-sidebar {
+    display: none !important;
+  }
+  
+  .content-with-ads {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,110 @@
+<!-- Partial para Google AdSense -->
+<% if (process.env.ENABLE_ADS === 'true') { %>
+  <!-- Script do AdSense (carrega apenas uma vez) -->
+  <% if (!locals.adsenseLoaded) { %>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= process.env.GOOGLE_ADSENSE_CLIENT %>" crossorigin="anonymous"></script>
+    <% locals.adsenseLoaded = true; %>
+  <% } %>
+
+  <!-- Banner Superior (728x90 ou responsivo) -->
+  <% if (locals.adPosition === 'top') { %>
+    <div class="ad-container ad-top">
+      <div class="ad-label">Publicidade</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+           data-ad-slot="<%= locals.adSlot || '1234567890' %>"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  <% } %>
+
+  <!-- Banner Lateral (300x250 ou 320x50) -->
+  <% if (locals.adPosition === 'sidebar') { %>
+    <div class="ad-container ad-sidebar">
+      <div class="ad-label">Publicidade</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+           data-ad-slot="<%= locals.adSlot || '1234567890' %>"
+           data-ad-format="rectangle"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  <% } %>
+
+  <!-- Banner Inferior (728x90 ou responsivo) -->
+  <% if (locals.adPosition === 'bottom') { %>
+    <div class="ad-container ad-bottom">
+      <div class="ad-label">Publicidade</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+           data-ad-slot="<%= locals.adSlot || '1234567890' %>"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  <% } %>
+
+  <!-- Banner Meio do Conteúdo (300x250 ou responsivo) -->
+  <% if (locals.adPosition === 'content') { %>
+    <div class="ad-container ad-content">
+      <div class="ad-label">Publicidade</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+           data-ad-slot="<%= locals.adSlot || '1234567890' %>"
+           data-ad-format="fluid"
+           data-ad-layout-key="-gw-1+2a-9x+5c"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  <% } %>
+
+  <!-- Banner para Mobile (320x50) -->
+  <% if (locals.adPosition === 'mobile') { %>
+    <div class="ad-container ad-mobile">
+      <div class="ad-label">Publicidade</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="<%= process.env.GOOGLE_ADSENSE_CLIENT %>"
+           data-ad-slot="<%= locals.adSlot || '1234567890' %>"
+           data-ad-format="banner"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  <% } %>
+
+  <!-- Auto Ads (recomendado para máxima receita) -->
+  <% if (locals.adPosition === 'auto') { %>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "<%= process.env.GOOGLE_ADSENSE_CLIENT %>",
+        enable_page_level_ads: true
+      });
+    </script>
+  <% } %>
+
+<% } else { %>
+  <!-- Modo de Teste - Mostra placeholder -->
+  <% if (process.env.AD_TESTING_MODE === 'true') { %>
+    <div class="ad-placeholder ad-<%= locals.adPosition || 'test' %>">
+      <div style="background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; text-align: center; color: #666; font-family: Arial, sans-serif;">
+        <strong>📊 AD PLACEHOLDER</strong><br>
+        Position: <%= locals.adPosition || 'test' %><br>
+        Size: <%= locals.adSize || 'responsive' %><br>
+        <small>Anúncio aparecerá aqui em produção</small>
+      </div>
+    </div>
+  <% } %>
+<% } %>

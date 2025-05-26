@@ -1,10 +1,24 @@
 </main>
 
+      <!-- Sidebar com anúncios (apenas em páginas de conteúdo) -->
+      <% if (locals.activePage !== 'login' && locals.activePage !== 'register') { %>
+        <aside class="ads-sidebar">
+          <%- include('adsense', { adPosition: 'sidebar', adSlot: '2345678901' }) %>
+          <%- include('adsense', { adPosition: 'sidebar', adSlot: '3456789012' }) %>
+        </aside>
+      </div>
+      <% } %>
+
+    <!-- Banner Inferior -->
+    <%- include('adsense', { adPosition: 'bottom', adSlot: '4567890123' }) %>
+
+    <!-- Banner Mobile -->
+    <%- include('adsense', { adPosition: 'mobile', adSlot: '5678901234' }) %>
+
   <footer>
     <p>Boa sorte no Rift, Invocador! 🎮</p>
   </footer>
 
-  <!-- <script src="/scripts/script.js"></script> -->
   <script src="/scripts/script.js"></script>
 </body>
 </html>
