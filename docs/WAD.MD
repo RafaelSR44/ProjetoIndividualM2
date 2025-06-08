@@ -209,7 +209,7 @@ O protótipo implementa:
 
 ### 3.7 Interface e Navegação (Semana 07)
 
-<!-- **Frontend Desenvolvido:**
+**Frontend Desenvolvido:**
 
 1. **Sistema de Navegação**
    - Menu responsivo com estados ativos
@@ -229,7 +229,7 @@ O protótipo implementa:
 4. **Autenticação**
    - Formulários com validação
    - Feedback visual de estados
-   - Proteção de rotas sensíveis -->
+   - Proteção de rotas sensíveis
 
 ---
 
@@ -237,7 +237,7 @@ O protótipo implementa:
 
 ### 4.1 Demonstração do Sistema Web (Semana 8)
 
-<!-- **Funcionalidades Implementadas:**
+**Funcionalidades Implementadas:**
 
 ✅ **Sistema de Autenticação**
 - Registro e login com validação
@@ -266,11 +266,11 @@ O protótipo implementa:
 ✅ **Banco de Dados**
 - PostgreSQL hospedado no Supabase
 - Migrations e scripts de setup
-- Operações CRUD completas -->
+- Operações CRUD completas
 
 ### 4.2 Conclusões e Trabalhos Futuros (Semana 8)
 
-<!-- **Pontos Fortes:**
+**Pontos Fortes:**
 - ✅ Arquitetura MVC bem estruturada
 - ✅ Interface intuitiva e responsiva
 - ✅ Sistema de autenticação robusto
@@ -292,7 +292,7 @@ O protótipo implementa:
 - 🚀 Dashboard administrativo
 - 🚀 Notificações push para atualizações
 - 🚀 Sistema de conquistas/badges
-- 🚀 Modo offline com service workers -->
+- 🚀 Modo offline com service workers
 
 ---
 
