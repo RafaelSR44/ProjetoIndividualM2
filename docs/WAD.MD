@@ -235,57 +235,57 @@ O protótipo implementa:
 
 #### **Capturas de Tela das Interfaces**
 
-**1. Página Inicial**
+**1. Página Inicial** <br><br>
 <img src="assets/home.png">
 
 Página principal da aplicação apresentando a navegação principal e uma visão geral do League of Legends Guide. Interface clean com design inspirado no universo do jogo.
 
-**2. Tela de Login**
+**2. Tela de Login** <br><br>
 <img src="assets/login.png">
 
 Formulário de autenticação com validação em tempo real, design consistente com a identidade visual da aplicação e feedback visual para estados de erro.
 
-**3. Tela de Registro**
+**3. Tela de Registro**<br><br>
 <img src="assets/register.png">
 
 Interface de cadastro de novos usuários com validação de campos, confirmação de senha e tratamento de erros para melhor experiência do usuário.
 
-**4. Sistema de Runas - Visão Geral**
+**4. Sistema de Runas - Visão Geral**<br><br>
 <img src="assets/runes.png">
 
 Página introdutória ao sistema de runas, explicando os conceitos fundamentais e fornecendo navegação para o construtor e páginas salvas.
 
-**5. Construtor de Runas**
+**5. Construtor de Runas**<br><br>
 <img src="assets/createRunes.png">
 
 Interface interativa para criação de páginas de runas, com seleção visual de árvores primárias e secundárias, validação de regras e preview em tempo real.
 
-**6. Minhas Runas**
+**6. Minhas Runas**<br><br>
 <img src="assets/myRunes.png">
 
 Página de gerenciamento das páginas de runas salvas pelo usuário, com visualização em cards, opções de edição e exclusão com confirmação.
 
-**7. Guia de Campeões**
+**7. Guia de Campeões**<br><br>
 <img src="assets/champions.png">
 
 Seção educativa sobre as diferentes classes de campeões, com cards interativos e informações detalhadas sobre cada categoria de personagem.
 
-**8. Guia de Feitiços**
+**8. Guia de Feitiços**<br><br>
 <img src="assets/spells.png">
 
 Interface educativa apresentando os feitiços do invocador, com descrições detalhadas, cooldowns e dicas de uso estratégico.
 
-**9. Guia de Lanes**
+**9. Guia de Lanes**<br><br>
 <img src="assets/lanes.png">
 
 Página explicativa sobre as diferentes rotas do mapa, suas responsabilidades e características específicas de cada posição.
 
-**10. Tipos de Dano**
+**10. Tipos de Dano**<br><br>
 <img src="assets/damageType.png">
 
 Seção educativa sobre os diferentes tipos de dano no jogo, explicando dano físico, mágico e verdadeiro com exemplos práticos.
 
-**11. Guia de Minions**
+**11. Guia de Minions**<br><br>
 <img src="assets/minions.png">
 
 Interface educativa sobre as unidades minions, suas características, valores de ouro e estratégias de farm para novos jogadores.
@@ -353,9 +353,324 @@ Interface educativa sobre as unidades minions, suas características, valores de
 - 🚀 Sistema de conquistas/badges
 - 🚀 Modo offline com service workers
 
+
+## 5. Decisões Técnicas e Arquitetura
+
+### 5.1 Escolha do Stack Tecnológico
+
+#### **Backend: Node.js + Express.js**
+**Decisão:** Utilização do Node.js com framework Express.js
+**Justificativa:**
+- **Performance**: Event-driven architecture adequada para aplicações web interativas
+- **Ecosystem**: NPM oferece vasta gama de pacotes para funcionalidades específicas
+- **Simplicidade**: Express.js permite desenvolvimento rápido com estrutura MVC clara
+- **Conhecimento**: Familiaridade com JavaScript full-stack reduz complexidade
+
+#### **Template Engine: EJS**
+**Decisão:** EJS (Embedded JavaScript) para renderização server-side
+**Justificativa:**
+- **Server-side Rendering**: Melhor SEO e performance inicial comparado a SPAs
+- **Integração Simples**: Sintaxe similar ao HTML com inserção de JavaScript
+- **Componentização**: Partials permitem reutilização de código (header, footer)
+- **Dados Dinâmicos**: Facilita passagem de dados do backend para frontend
+
+#### **Banco de Dados: PostgreSQL + Supabase**
+**Decisão:** PostgreSQL hospedado no Supabase
+**Justificativa:**
+- **Robustez**: PostgreSQL é enterprise-grade com ACID compliance
+- **Relacionamentos**: Necessário para foreign keys entre usuários e páginas de runas
+- **Supabase**: Managed service com SSL nativo e dashboard administrativo
+- **Escalabilidade**: Suporte a growth futuro sem migração complexa
+
+#### **Autenticação: Express Sessions + bcrypt**
+**Decisão:** Sessions server-side com hash bcrypt
+**Justificativa:**
+- **Segurança**: bcrypt com salt rounds previne rainbow table attacks
+- **Simplicidade**: Express-session integra nativamente com Express
+- **Stateful**: Adequado para aplicação com poucos usuários simultâneos
+- **Controle**: Maior controle sobre invalidação de sessões
+
+### 5.2 Arquitetura MVC Implementada
+
+```
+ProjetoIndividualM2/
+├── controllers/        # Business Logic Layer
+│   ├── AuthController.js
+│   ├── RunesController.js
+│   └── [outros]Controller.js
+├── models/            # Data Access Layer
+│   ├── User.js
+│   └── RunePage.js
+├── views/             # Presentation Layer
+│   ├── pages/
+│   ├── partials/
+│   └── auth/
+├── routes/            # URL Routing
+│   └── index.js
+├── config/            # Configuration
+│   └── database.js
+└── public/            # Static Assets
+    ├── scripts/
+    ├── stylesheet/
+    └── assets/
+```
+
+**Separação de Responsabilidades:**
+- **Controllers**: Lógica de negócio e orchestração
+- **Models**: Abstração do banco de dados e validações
+- **Views**: Apresentação e UI components
+- **Routes**: Mapeamento URL → Controller
+- **Middleware**: Autenticação e validações transversais
+
 ---
 
-## <a name="c5"></a>5. Referências
+## 6. Principais Aprendizados e Desafios Superados
+
+### 6.1 Desafios Técnicos Críticos
+
+#### **🧩 Complexidade do Sistema de Runas**
+**Desafio:**
+- League of Legends possui regras específicas para construção de páginas de runas
+- Usuário deve escolher exatamente 2 runas secundárias de slots diferentes
+- Preview em tempo real sincronizado com formulário
+
+**Solução Implementada:**
+```javascript
+function handleSecondarySlotSelection() {
+  const selectedCheckboxes = document.querySelectorAll('.secondary-slot-checkbox:checked');
+  const selectedSlots = Array.from(selectedCheckboxes).map(cb => cb.dataset.slot);
+  const uniqueSlots = new Set(selectedSlots);
+  
+  // Validação: 2 seleções de slots únicos
+  if (selectedCheckboxes.length === 2 && uniqueSlots.size === 2) {
+    // Desabilitar opções não selecionadas
+    disableNonSelectedOptions();
+  } else if (uniqueSlots.size === 1 && selectedCheckboxes.length === 2) {
+    // Desmarcar última seleção se for do mesmo slot
+    desmarcarUltimaSeleção();
+  }
+}
+```
+
+**Aprendizado:** Validações complexas no frontend requerem gerenciamento cuidadoso de estado e feedback visual claro.
+
+#### **🔄 Sincronização Preview Tempo Real**
+**Desafio:**
+- Atualizar preview instantaneamente conforme usuário seleciona runas
+- Manter consistência entre dados do formulário e visualização
+
+**Solução Implementada:**
+```javascript
+function updateRunePreview() {
+  const formData = extractFormData();
+  const previewHTML = buildPreviewHTML(formData);
+  document.getElementById('rune-preview-content').innerHTML = previewHTML;
+}
+
+// Attachar em todos os inputs
+document.querySelectorAll('input[type="radio"], input[type="checkbox"]')
+  .forEach(input => input.addEventListener('change', updateRunePreview));
+```
+
+**Aprendizado:** Event delegation e funções puras facilitam manutenção de features complexas.
+
+#### **🔒 Segurança e Validação Dupla**
+**Desafio:**
+- Validar dados tanto no frontend quanto backend
+- Prevenir ataques comuns (SQL injection, XSS)
+
+**Solução Implementada:**
+```javascript
+// Backend - Queries parametrizadas
+const result = await pool.query(
+  'INSERT INTO rune_pages (user_id, name, primary_tree...) VALUES ($1, $2, $3...)',
+  [userId, name, primaryTree, ...]
+);
+
+// Frontend - Sanitização e validação
+const sanitizedData = {
+  name: DOMPurify.sanitize(formData.name),
+  // ... outras validações
+};
+```
+
+**Aprendizado:** Segurança é responsabilidade de todas as camadas da aplicação.
+
+### 6.2 Aprendizados Técnicos Significativos
+
+#### **📊 Gerenciamento de Estado Complexo**
+- **Antes:** Manipulação direta do DOM sem controle de estado
+- **Depois:** Estado centralizado em objetos JavaScript com funções puras
+- **Impacto:** Código mais previsível e debugging facilitado
+
+#### **🎨 CSS Grid e Flexbox Avançado**
+- **Aprendizado:** Combinação de Grid (layout macro) + Flexbox (componentes)
+- **Resultado:** Interface responsiva sem media queries excessivos
+- **Técnica:** Mobile-first design com progressive enhancement
+
+#### **🚀 Performance Frontend**
+- **Event Delegation:** Menos listeners, melhor performance
+- **Lazy Loading:** Assets carregados conforme necessário
+- **Debouncing:** Validações sem overhead excessivo
+
+### 6.3 Metodologia de Desenvolvimento
+
+#### **🔧 Desenvolvimento Iterativo**
+1. **MVP**: Sistema básico de autenticação + CRUD runas
+2. **Iteração 1**: Validações frontend + preview
+3. **Iteração 2**: UI/UX polish + responsividade
+4. **Iteração 3**: Conteúdo educativo + integração
+
+#### **🧪 Testing Strategy**
+- **Manual Testing**: Fluxos críticos testados em múltiplos browsers
+- **Database Testing**: Scripts de verificação de integridade
+- **User Acceptance**: Feedback de usuários beta (colegas de classe)
+
+---
+
+## 7. Avaliação de Resultados
+
+### 7.1 Pontos que Funcionaram Muito Bem ✅
+
+#### **🏗️ Arquitetura MVC Sólida**
+- **Separação clara** de responsabilidades facilita manutenção
+- **Reutilização** de componentes (partials EJS, CSS classes)
+- **Escalabilidade** - fácil adicionar novas features
+- **Debugging** simplificado com camadas bem definidas
+
+#### **💎 Sistema de Runas Interativo**
+- **Validação em tempo real** proporciona excelente UX
+- **Preview instantâneo** elimina uncertainty do usuário
+- **Feedback visual** claro para estados (selecionado, desabilitado, erro)
+- **Persistência** confiável com PostgreSQL
+
+#### **🔐 Segurança Robusta**
+- **Hash bcrypt** com salt adequado
+- **Sessions seguras** com HTTP-only cookies
+- **Queries parametrizadas** previnem SQL injection
+- **Validação dupla** (frontend + backend)
+
+#### **📱 Responsividade Completa**
+- **Mobile-first** design funciona em todos os dispositivos
+- **Grid systems** adaptam-se automaticamente
+- **Touch-friendly** interfaces em dispositivos móveis
+
+#### **🎨 Design System Consistente**
+- **Paleta de cores** inspirada no universo LoL
+- **Tipografia** hierárquica clara
+- **Componentes** reutilizáveis e consistentes
+- **Animações** suaves que melhoram percepção de performance
+
+### 7.2 Pontos para Melhoria Futura 🔄
+
+#### **🧪 Testing Coverage**
+**Limitação Atual:**
+- Testes principalmente manuais
+- Ausência de testes unitários automatizados
+- Sem CI/CD pipeline
+
+**Melhorias Propostas:**
+```javascript
+// Exemplo de testes desejados
+describe('RuneBuilder', () => {
+  test('deve validar seleção de runas secundárias', () => {
+    const runesData = { ... };
+    const result = validateSecondaryRunes(runesData);
+    expect(result.isValid).toBe(true);
+  });
+});
+```
+
+#### **⚡ Performance Optimization**
+**Oportunidades:**
+- **Caching**: Redis para sessions e queries frequentes
+- **CDN**: Assets estáticos em CDN para melhor loading
+- **Code Splitting**: JavaScript modular com imports dinâmicos
+- **Database Indexing**: Índices otimizados para queries complexas
+
+#### **🌐 Internacionalização**
+**Visão Futura:**
+- Suporte multi-idioma (i18n)
+- Nomes de runas em inglês/português
+- Formatação de datas por região
+
+#### **📊 Analytics e Monitoring**
+**Necessidades Identificadas:**
+- Tracking de uso de páginas de runas
+- Métricas de performance (loading times)
+- Error logging estruturado
+- User behavior analytics
+
+#### **🚀 Features Avançadas**
+**Roadmap Técnico:**
+```javascript
+// Integração com API da Riot Games
+const championData = await riotAPI.getChampion(championId);
+const recommendedRunes = await runeRecommendationEngine(championData);
+
+// Sistema de compartilhamento
+const shareableLink = generateRunePageURL(runePageData);
+
+// Modo offline com Service Workers
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+```
+
+### 7.3 Métricas de Sucesso Alcançadas
+
+#### **✨ Funcionalidades Core**
+- [x] **100%** das funcionalidades planejadas implementadas
+- [x] **Sistema de autenticação** completo e seguro
+- [x] **Construtor de runas** com validações complexas
+- [x] **Interface responsiva** funcionando em mobile/desktop
+- [x] **Persistência de dados** confiável
+
+#### **🎯 Qualidade Técnica**
+- [x] **Arquitetura MVC** bem estruturada
+- [x] **Código limpo** com separação de responsabilidades
+- [x] **Segurança** implementada em múltiplas camadas
+- [x] **Performance** adequada para escala atual
+
+#### **📈 User Experience**
+- [x] **Interface intuitiva** com feedback visual claro
+- [x] **Validações em tempo real** sem frustração
+- [x] **Loading states** apropriados
+- [x] **Error handling** graceful com mensagens úteis
+
+---
+
+## 8. Conclusão Técnica
+
+### 8.1 Competências Desenvolvidas
+
+Este projeto demonstrou proficiência em:
+- **Full-stack development** com JavaScript
+- **Arquitetura MVC** bem estruturada
+- **Database design** e operações CRUD
+- **Segurança web** moderna
+- **UI/UX responsivo** com CSS avançado
+- **State management** complexo no frontend
+
+### 8.2 Preparação para Próximos Projetos
+
+**Bases Sólidas Estabelecidas:**
+- Metodologia de desenvolvimento estruturada
+- Padrões de código limpo e manutenível
+- Mindset de segurança first
+- Experiência com debugging complexo
+
+**Áreas de Crescimento Identificadas:**
+- Testing automatizado (Jest, Cypress)
+- DevOps e deployment (Docker, CI/CD)
+- Performance optimization avançada
+- Microservices architecture
+
+O **League of Legends Guide** representa uma evolução significativa nas habilidades de desenvolvimento web, combinando complexidade técnica com experiência de usuário excepcional.
+
+---
+
+## <a name="c5"></a>9. Referências
 
 1. **Riot Games Developer Portal** - https://developer.riotgames.com/
 2. **League of Legends Official Site** - https://www.leagueoflegends.com/
