@@ -19,7 +19,7 @@ A aplicação segue o padrão **MVC (Model-View-Controller)** com:
 - **Backend:** Node.js + Express.js
 - **Frontend:** EJS + CSS + JavaScript
 - **Banco de Dados:** PostgreSQL (Supabase)
-- **Autenticação:** Express Sessions + bcrypt
+- **Autenticação:** Express Sessions + bcryptjs
 
 ## 📁 Estrutura de Pastas e Arquivos
 
@@ -377,13 +377,95 @@ tests/
 - [x] Feedback visual
 - [x] Acessibilidade básica
 
-## 🚧 Melhorias Futuras
+## ▶️ Video
 
-### 🔄 Em Desenvolvimento
-- [ ] Testes unitários completos
-- [ ] Cache de sessões com Redis
-- [ ] Rate limiting para APIs
-- [ ] Logs estruturados
+### ⛓️‍💥 Link para o video de demonstração
+
+
+
+## 🖥️ Interface e Navegação
+
+**Frontend Desenvolvido:**
+
+1. **Sistema de Navegação**
+   - Menu responsivo com estados ativos
+   - Breadcrumbs contextuais
+   - Navegação por teclado (Alt + setas)
+
+2. **Páginas Educativas**
+   - Conteúdo interativo com JavaScript
+   - Cards expansíveis e tooltips
+   - Animações CSS suaves
+
+3. **Sistema de Runas**
+   - Construtor visual interativo
+   - Preview em tempo real
+   - Validação de seleções
+
+4. **Autenticação**
+   - Formulários com validação
+   - Feedback visual de estados
+   - Proteção de rotas sensíveis
+
+#### **Capturas de Tela das Interfaces**
+
+**1. Página Inicial**
+<img src="docs/assets/home.png">
+
+Página principal da aplicação apresentando a navegação principal e uma visão geral do League of Legends Guide. Interface clean com design inspirado no universo do jogo.
+
+**2. Tela de Login**
+<img src="docs/assets/login.png">
+
+Formulário de autenticação com validação em tempo real, design consistente com a identidade visual da aplicação e feedback visual para estados de erro.
+
+**3. Tela de Registro**
+<img src="docs/assets/register.png">
+
+Interface de cadastro de novos usuários com validação de campos, confirmação de senha e tratamento de erros para melhor experiência do usuário.
+
+**4. Sistema de Runas - Visão Geral**
+<img src="docs/assets/runes.png">
+
+Página introdutória ao sistema de runas, explicando os conceitos fundamentais e fornecendo navegação para o construtor e páginas salvas.
+
+**5. Construtor de Runas**
+<img src="docs/assets/createRunes.png">
+
+Interface interativa para criação de páginas de runas, com seleção visual de árvores primárias e secundárias, validação de regras e preview em tempo real.
+
+**6. Minhas Runas**
+<img src="docs/assets/myRunes.png">
+
+Página de gerenciamento das páginas de runas salvas pelo usuário, com visualização em cards, opções de edição e exclusão com confirmação.
+
+**7. Guia de Campeões**
+<img src="docs/assets/champions.png">
+
+Seção educativa sobre as diferentes classes de campeões, com cards interativos e informações detalhadas sobre cada categoria de personagem.
+
+**8. Guia de Feitiços**
+<img src="docs/assets/spells.png">
+
+Interface educativa apresentando os feitiços do invocador, com descrições detalhadas, cooldowns e dicas de uso estratégico.
+
+**9. Guia de Lanes**
+<img src="docs/assets/lanes.png">
+
+Página explicativa sobre as diferentes rotas do mapa, suas responsabilidades e características específicas de cada posição.
+
+**10. Tipos de Dano**
+<img src="docs/assets/damageType.png">
+
+Seção educativa sobre os diferentes tipos de dano no jogo, explicando dano físico, mágico e verdadeiro com exemplos práticos.
+
+**11. Guia de Minions**
+<img src="docs/assets/minions.png">
+
+Interface educativa sobre as unidades minions, suas características, valores de ouro e estratégias de farm para novos jogadores.
+
+
+## 🚧 Melhorias Futuras
 
 ### 🚀 Roadmap
 - [ ] PWA (Progressive Web App)
@@ -391,8 +473,14 @@ tests/
 - [ ] Sistema de compartilhamento
 - [ ] Dashboard administrativo
 - [ ] Sistema de favoritos
-- [ ] Notificações push
 - [ ] Modo offline
+
+## Tecnologias Utilizadas
+
+- **Backend:** Node.js + Express.js
+- **Frontend:** EJS + CSS + JavaScript
+- **Banco de Dados:** PostgreSQL (Supabase)
+- **Autenticação:** Express Sessions + bcryptjs
 
 ## 🐛 Troubleshooting
 

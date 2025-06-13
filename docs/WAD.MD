@@ -116,7 +116,9 @@ CREATE TABLE rune_pages (
 
 ### 3.2. Arquitetura (Semana 5)
 
+<img src="assets/arquitetura.png">
 
+Segue imagem com a arquitetura do projeto.
 
 A aplicação segue o padrão **MVC (Model-View-Controller)** com Express.js:
 
